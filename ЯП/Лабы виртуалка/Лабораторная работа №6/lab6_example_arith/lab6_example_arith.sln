@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lab6_example_arith", "lab6_example_arith\lab6_example_arith.vcxproj", "{50CDE10B-43EE-4450-80DF-5EA072E532BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50CDE10B-43EE-4450-80DF-5EA072E532BA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{50CDE10B-43EE-4450-80DF-5EA072E532BA}.Debug|Win32.Build.0 = Debug|Win32
+		{50CDE10B-43EE-4450-80DF-5EA072E532BA}.Release|Win32.ActiveCfg = Release|Win32
+		{50CDE10B-43EE-4450-80DF-5EA072E532BA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

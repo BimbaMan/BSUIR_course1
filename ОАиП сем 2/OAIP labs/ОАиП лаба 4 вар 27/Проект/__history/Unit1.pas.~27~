@@ -1,0 +1,346 @@
+unit Unit1;
+
+interface
+
+uses
+  math, Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Grids,
+  Vcl.Imaging.jpeg;
+
+type
+  TFunction = function(X: double): double;
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    StaticText2: TStaticText;
+    StaticText3: TStaticText;
+    StaticText4: TStaticText;
+    StaticText5: TStaticText;
+    StaticText6: TStaticText;
+    StaticText13: TStaticText;
+    StaticText14: TStaticText;
+    StaticText17: TStaticText;
+    StaticText20: TStaticText;
+    StaticText1: TStaticText;
+    StaticText7: TStaticText;
+    StaticText8: TStaticText;
+    TrapAm2_1: TStaticText;
+    TrapN2_1: TStaticText;
+    TrapAm3_1: TStaticText;
+    TrapN3_1: TStaticText;
+    TrapAm2_2: TStaticText;
+    TrapN2_2: TStaticText;
+    TrapAm3_2: TStaticText;
+    TrapN3_2: TStaticText;
+    TrapAm2_3: TStaticText;
+    TrapN2_3: TStaticText;
+    TrapAm3_3: TStaticText;
+    TrapN3_3: TStaticText;
+    TrapAm2_4: TStaticText;
+    TrapN2_4: TStaticText;
+    TrapAm3_4: TStaticText;
+    TrapN3_4: TStaticText;
+    StaticText29: TStaticText;
+    StaticText30: TStaticText;
+    StaticText31: TStaticText;
+    StaticText32: TStaticText;
+    StaticText33: TStaticText;
+    StaticText34: TStaticText;
+    StaticText35: TStaticText;
+    RectAm2_1: TStaticText;
+    RectN2_1: TStaticText;
+    RectAm3_1: TStaticText;
+    RectN3_1: TStaticText;
+    RectAm2_2: TStaticText;
+    RectN2_2: TStaticText;
+    RectAm3_2: TStaticText;
+    RectN3_2: TStaticText;
+    RectAm2_3: TStaticText;
+    RectN2_3: TStaticText;
+    RectAm3_3: TStaticText;
+    RectN3_3: TStaticText;
+    RectAm2_4: TStaticText;
+    RectN2_4: TStaticText;
+    RectAm3_4: TStaticText;
+    RectN3_4: TStaticText;
+    BGraph1: TButton;
+    BGraph2: TButton;
+    BGraph3: TButton;
+    BGraph4: TButton;
+    IGraph: TImage;
+    Image1: TImage;
+    Image2: TImage;
+    Image3: TImage;
+    Image4: TImage;
+    procedure BGraph1Click(Sender: TObject);
+    procedure BGraph2Click(Sender: TObject);
+    procedure BGraph3Click(Sender: TObject);
+    procedure BGraph4Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+function Integral_1(X: double): double;
+function Integral_2(X: double): double;
+function Integral_3(X: double): double;
+function Integral_4(X: double): double;
+var
+  Form1: TForm1;
+  intTemp :double;
+  n :integer;
+
+implementation
+function Integral_1(X: double): double;
+begin
+  Result := sqrt(0.8*sqr(x) + 1.3) / (1.4 + sqrt(sqr(x) + 0.6));
+end;
+function Integral_2(X: double): double;
+begin
+  Result := sin(0.8*x + 1)/(0.7 + cos(sqr(x) + 0.6));
+end;
+function Integral_3(X: double): double;
+begin
+  Result := 1/sqrt(1.5 * sqr(x) + 0.7);
+end;
+function Integral_4(X: double): double;
+begin
+  Result := cos(x)/(sqr(x) + 1);
+end;
+
+procedure Trapezium_method (Integral :TFunction; LeftLimit,RightLimit,Eps :double; ToRound :integer);
+var
+  i:integer;
+  x, hNow, hNext, Int, tempNext :double;
+begin
+  n := 1;
+  hNow := (RightLimit-LeftLimit)/n;
+  x := LeftLimit;
+  int := hNow * Integral(x);
+  repeat
+    int := intTemp;
+    n := n * 2;
+    tempNext := 0;
+    hNext := (RightLimit - LeftLimit)/n;
+    for I := 0 to n-1 do
+    begin
+      x := LeftLimit + i * hNext;
+      tempnext := tempnext + Integral(x);
+    end;
+   inttemp := hNext * tempnext;
+  until (abs(intTemp-int)<=Eps);
+  inttemp := round(inttemp * ToRound) / ToRound;
+end;
+
+procedure CentralRects_Method(Integral :TFunction; LeftLimit,RightLimit,Eps :double; ToRound :integer);
+var
+  i:integer;
+  x, hNow, hNext, Int, TempNext, ZeroTemp, nTemp :double;
+begin
+  n := 1;
+  x := LeftLimit;
+  zerotemp := Integral(x);
+  repeat
+    int := inttemp;
+    hNext := (RightLimit - LeftLimit) / n;
+    x := LeftLimit + n * hNext + hNext/2;
+    ntemp := Integral(x);
+    tempnext := 0;
+
+    if n <> 1 then
+    begin
+      for i := 0 to n - 1 do
+      begin
+        x := LeftLimit + i * hNext + hNext/2;
+        tempnext := tempnext + Integral(x);
+        tempnext := tempnext;
+      end;
+    end;
+     inttemp := (hNext / 2) * (ntemp + zerotemp + 2 * tempnext);
+    n := n * 2;
+
+  until abs(inttemp - int) <= eps;
+  inttemp := round(inttemp * ToRound) / ToRound;
+end;
+
+procedure axes(var IGraph: TImage); // axes drawing
+const
+  scale = 40;
+var
+  i: byte;
+  x0, y0, temp: integer;
+begin
+  // Image center
+  x0 := IGraph.Width div 2;
+  y0 := IGraph.Height div 2;
+  // drawing axes
+  with IGraph.canvas do
+  begin
+    pen.Width := 2;
+    MoveTo(x0, 0);
+    LineTo(x0, IGraph.Height);
+    MoveTo(0, y0);
+    LineTo(IGraph.Width, y0);
+    textOut(x0 + 3, y0 + 3, '0');
+    // x marking
+    i := 1;
+    MoveTo(x0, y0);
+    temp := scale + 5;
+    while temp < IGraph.Width do
+    begin
+      textOut(x0 + temp, y0 + 5, IntToStr(i));
+      MoveTo(x0 + temp, y0 - 3);
+      LineTo(x0 + temp, y0 + 3);
+      textOut(x0 - temp, y0 + 5, '-' + IntToStr(i));
+      MoveTo(x0 - temp, y0 - 3);
+      LineTo(x0 - temp, y0 + 3);
+      inc(i);
+      temp := temp + scale;
+    end;
+    // y marking
+    i := 1;
+    MoveTo(x0, y0);
+    temp := scale + 5;
+    while temp < IGraph.Height do
+    begin
+      textOut(x0 + 5, y0 + temp, '-' + IntToStr(i));
+      MoveTo(x0 - 3, y0 + temp);
+      LineTo(x0 + 3, y0 + temp);
+      textOut(x0 + 5, y0 - temp, IntToStr(i));
+      MoveTo(x0 - 3, y0 - temp);
+      LineTo(x0 + 3, y0 - temp);
+      inc(i);
+      temp := temp + scale;
+    end;
+  end;
+end;
+
+procedure Graph_Drawing(integral :TFunction; leftLimit, rightLimit :double; steps, scale :integer; var IGraph: TImage);
+var
+  x0,y0,x1,y1,x2,y2 :integer;
+  step :double;
+begin
+  IGraph.Canvas.Pen.Color := clBlack;
+  axes(IGraph);
+  x0 := IGraph.Width div 2;
+  y0 := IGraph.Height div 2;
+  step := (rightLimit-leftLimit)/steps;
+  IGraph.canvas.pen.Color := clRed;
+  while (leftLimit+step) <= rightLimit do
+  begin
+    x1 := round(leftLimit*scale);
+    y1 := Round(integral(leftLimit)*Scale);
+    x2 := round((leftLimit+step)*scale);
+    y2 := round((integral(leftLimit+step))*scale);
+    with  IGraph.Canvas do
+    begin
+      moveTo(x1+x0, -1*(y1-y0));
+      LineTo(x2+x0, -1*(y2-y0));
+      leftLimit := leftLimit + step;
+    end;
+  end;
+
+end;
+
+{$R *.dfm}
+
+procedure TForm1.BGraph1Click(Sender: TObject);
+begin
+  IGraph.Canvas.Pen.Color := clBlack;
+  IGraph.Canvas.Rectangle(0,0,IGraph.Width,IGraph.Height);
+  Graph_Drawing(Integral_1, -0.84, 25, 100000, 100, IGraph);
+end;
+
+procedure TForm1.BGraph2Click(Sender: TObject);
+begin
+  IGraph.Canvas.Pen.Color := clBlack;
+  IGraph.Canvas.Rectangle(0,0,IGraph.Width,IGraph.Height);
+  Graph_Drawing(Integral_2, -25, 25, 100000, 100, IGraph);
+end;
+
+procedure TForm1.BGraph3Click(Sender: TObject);
+begin
+  IGraph.Canvas.Pen.Color := clBlack;
+  IGraph.Canvas.Rectangle(0,0,IGraph.Width,IGraph.Height);
+  Graph_Drawing(Integral_3, 1.00001, 25, 100000, 100, IGraph);
+  Graph_Drawing(Integral_3, -25, -1.00001, 100000, 100, IGraph);
+end;
+
+procedure TForm1.BGraph4Click(Sender: TObject);
+begin
+  IGraph.Canvas.Pen.Color := clBlack;
+  IGraph.Canvas.Rectangle(0,0,IGraph.Width,IGraph.Height);
+  Graph_Drawing(Integral_4, -25, 25, 100000, 100, IGraph);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);                //integrals output
+begin
+  Trapezium_Method(Integral_1,1.3,2.5,0.01,10000);
+  trapAm2_1.Caption := FloatToStr(Inttemp);
+  TrapN2_1.Caption := IntToStr(n);
+
+  Trapezium_Method(Integral_1,1.3,2.5,0.001,100000);
+  trapAm3_1.Caption := FloatToStr(Inttemp);
+  TrapN3_1.Caption := IntToStr(n);
+
+  Trapezium_Method(Integral_2,0.4,0.8,0.01,10000);
+  trapAm2_2.Caption := FloatToStr(Inttemp);
+  TrapN2_2.Caption := IntToStr(n);
+
+  Trapezium_Method(Integral_2,0.4,0.8,0.001,100000);
+  trapAm3_2.Caption := FloatToStr(Inttemp);
+  TrapN3_2.Caption := IntToStr(n);
+
+  Trapezium_Method(Integral_3,1.4,2.6,0.01,10000);
+  trapAm2_3.Caption := FloatToStr(Inttemp);
+  TrapN2_3.Caption := IntToStr(n);
+
+  Trapezium_Method(Integral_3,1.4,2.6,0.001,100000);
+  trapAm3_3.Caption := FloatToStr(Inttemp);
+  TrapN3_3.Caption := IntToStr(n);
+
+  Trapezium_Method(Integral_4,0.8,1.2,0.01,10000);
+  trapAm2_4.Caption := FloatToStr(Inttemp);
+  TrapN2_4.Caption := IntToStr(n);
+
+  Trapezium_Method(Integral_4,0.8,1.2,0.001,100000);
+  trapAm3_4.Caption := FloatToStr(Inttemp);
+  TrapN3_4.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_1,1.3,2.5,0.01,10000);
+  RectAm2_1.Caption := FloatToStr(Inttemp);
+  RectN2_1.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_1,1.3,2.5,0.001,100000);
+  RectAm3_1.Caption := FloatToStr(Inttemp);
+  RectN3_1.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_2,0.4,0.8,0.01,10000);
+  RectAm2_2.Caption := FloatToStr(Inttemp);
+  RectN2_2.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_2,0.4,0.8,0.001,100000);
+  RectAm3_2.Caption := FloatToStr(Inttemp);
+  RectN3_2.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_3,1.4,2.6,0.01,10000);
+  RectAm2_3.Caption := FloatToStr(Inttemp);
+  RectN2_3.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_3,1.4,2.6,0.001,100000);
+  RectAm3_3.Caption := FloatToStr(Inttemp);
+  RectN3_3.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_4,0.8,1.2,0.01,10000);
+  RectAm2_4.Caption := FloatToStr(Inttemp);
+  RectN2_4.Caption := IntToStr(n);
+
+  CentralRects_Method(Integral_4,0.8,1.2,0.001,100000);
+  RectAm3_4.Caption := FloatToStr(Inttemp);
+  RectN3_4.Caption := IntToStr(n);
+
+end;
+
+end.

@@ -1,0 +1,126 @@
+procedure Shaker(arr_temp :TArray);
+var i, j, l, r, k, x :integer;
+begin
+SetLength(arr_temp,length(arr));
+ for j := 0 to length(arr)-1 do
+ begin
+  arr_temp[j] := arr[j];
+ end;
+l := 1;
+r := length(arr_temp)-1;
+k := length(arr_temp)-1;
+cmpr := 0;
+exchange := 0;
+  repeat
+    for j := r downto l do
+    begin
+      if (arr_temp[j-1] > arr_temp[j]) then
+      begin
+        x := arr_temp[j-1];
+        arr_temp[j-1] := arr_temp[j];
+        arr_temp[j] := x;
+        k := j;
+        inc(exchange);
+      end;
+    inc(cmpr);
+    end;
+  l := k+1;
+  for j := l to r do
+  begin
+    if (arr_temp[j-1] > arr_temp[j]) then
+    begin
+    x := arr_temp[j-1];
+    arr_temp[j-1] := arr_temp[j];
+    arr_temp[j] := x;
+    k := j;
+    inc(exchange);
+    end;
+  inc(cmpr);
+  end;
+  r := k-1;
+ until (l > r);
+end;
+
+procedure Shell_Sort(arr_temp: TArray);
+var
+  gap, lt, rt, i, t: integer;
+begin
+  cmpr := 0;
+  exchange := 0;
+  gap := 1;
+  while gap <= High(arr) do
+    gap := 3 * gap + 1;
+  gap := gap div 3;
+  while gap > 0 do
+  begin
+    for i := 0 to High(arr) - gap do
+    begin
+      lt := i;
+      rt := lt + gap;
+      inc(exchange);
+      t := arr[rt];
+      inc(cmpr);
+      while (lt >= 0) and (arr[lt] > t) do
+      begin
+        inc(cmpr);
+        inc(exchange);
+        arr[rt] := arr[lt];
+        rt := lt;
+        inc(exchange);
+        Dec(lt, gap);
+      end;
+      inc(exchange);
+      arr[rt] := t;
+    end;
+    gap := gap div 3;
+  end;
+end;
+
+procedure calc_quick(var arr1: TArray; l, r: integer; out compare, exchng: integer);
+var
+  i, j: integer; w, q: integer;
+begin
+  i := l;
+  j := r;
+  inc(exchng);
+  q := arr1[(l + r) div 2];
+  repeat
+    inc(compare);
+    while (arr1[i] < q) do
+    begin
+      inc(compare);
+      inc(i);
+    end;
+    inc(compare);
+    while (q < arr1[j]) do
+    begin
+      inc(compare);
+      Dec(j);
+    end;
+    if (i <= j) then
+    begin
+      inc(exchng);
+      w := arr1[i];
+      inc(exchng);
+      arr1[i] := arr1[j];
+      inc(exchng);
+      arr1[j] := w;
+      inc(i);
+      Dec(j);
+    end;
+  until (i > j);
+  if (l < j) then
+    calc_quick(arr1, l, j, compare, exchng);
+  if (i < r) then
+    calc_quick(arr1, i, r, compare, exchng);
+end;
+
+procedure Quick_Sort(var arr1: TArray);
+Var
+  N: integer; i :integer;
+begin
+  cmpr := 0;
+  exchange := 0;
+  N := Length(arr1) - 1;
+  calc_quick(arr1, 1, N, cmpr, exchange);
+end;

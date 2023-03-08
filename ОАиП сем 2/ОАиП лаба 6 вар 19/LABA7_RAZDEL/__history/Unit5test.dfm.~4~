@@ -1,0 +1,148 @@
+object frmEdit: TfrmEdit
+  Left = 0
+  Top = 0
+  AutoSize = True
+  Caption = 'frmEdit'
+  ClientHeight = 247
+  ClientWidth = 504
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lblEditTitle: TLabel
+    Left = 0
+    Top = 0
+    Width = 504
+    Height = 23
+    Align = alTop
+    Alignment = taCenter
+    Caption = #1056#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1085#1080#1077' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitWidth = 304
+  end
+  object edtEditNumber: TEdit
+    Left = 8
+    Top = 52
+    Width = 121
+    Height = 21
+    NumbersOnly = True
+    TabOrder = 0
+  end
+  object rbEditMale: TRadioButton
+    Left = 8
+    Top = 29
+    Width = 57
+    Height = 17
+    Caption = #1046#1077#1085#1080#1093
+    TabOrder = 1
+  end
+  object rbEditFemale: TRadioButton
+    Left = 71
+    Top = 29
+    Width = 57
+    Height = 17
+    Caption = #1053#1077#1074#1077#1089#1090#1072
+    TabOrder = 2
+  end
+  object btnEditFind: TButton
+    Left = 8
+    Top = 79
+    Width = 75
+    Height = 25
+    Caption = #1053#1072#1081#1090#1080
+    TabOrder = 3
+    OnClick = btnEditFindClick
+  end
+  object edtEditName: TEdit
+    Left = 376
+    Top = 29
+    Width = 121
+    Height = 21
+    TabOrder = 4
+  end
+  object edtEditAge: TEdit
+    Left = 376
+    Top = 56
+    Width = 121
+    Height = 21
+    NumbersOnly = True
+    TabOrder = 5
+  end
+  object edtEditHeight: TEdit
+    Left = 376
+    Top = 83
+    Width = 121
+    Height = 21
+    NumbersOnly = True
+    TabOrder = 6
+  end
+  object edtEditWeight: TEdit
+    Left = 376
+    Top = 110
+    Width = 121
+    Height = 21
+    NumbersOnly = True
+    TabOrder = 7
+  end
+  object btnEditEditing: TButton
+    Left = 421
+    Top = 222
+    Width = 75
+    Height = 25
+    Caption = #1054#1050
+    TabOrder = 8
+    OnClick = btnEditEditingClick
+  end
+  object edtEditAgeMin: TEdit
+    Left = 376
+    Top = 137
+    Width = 49
+    Height = 21
+    TabOrder = 9
+  end
+  object edtEditAgeMax: TEdit
+    Left = 449
+    Top = 137
+    Width = 48
+    Height = 21
+    TabOrder = 10
+  end
+  object Edit1: TEdit
+    Left = 376
+    Top = 164
+    Width = 49
+    Height = 21
+    TabOrder = 11
+  end
+  object Edit2: TEdit
+    Left = 449
+    Top = 164
+    Width = 49
+    Height = 21
+    TabOrder = 12
+  end
+  object Edit3: TEdit
+    Left = 376
+    Top = 191
+    Width = 49
+    Height = 21
+    TabOrder = 13
+  end
+  object Edit4: TEdit
+    Left = 448
+    Top = 191
+    Width = 49
+    Height = 21
+    TabOrder = 14
+  end
+end

@@ -1,0 +1,61 @@
+; Calculate and print result of (a*3+b*c)/(d-2)
+org 100h
+start:
+        mov ah,09h;DOS function to write text on the screen
+        mov dx,prog ;zapis stroki prog v registr dx
+        int 21h  ;DOS interruption to execute function (prerivanie)
+
+        mov ah,02h  ;DOS function to write ASCII symbols
+        mov dx,0x0D0A ;cod in ASCII to go to the next line
+        int 21h
+
+        mov ah,09h
+        mov dx,str2
+        int 21h
+
+        mov ah,02h
+        mov dx,0x0D0A
+        int 21h
+
+        mov ah,09h
+        mov dx,result_is
+        int 21h
+
+        mov ax,[a]
+        mov bx,$03
+        mul bx ;a*3 i zapis v ax
+
+        mov bx,ax;osvobozdaem ax dlia zapisi b*c v ax
+        mov ax,[b]
+        mov cx,[c]
+        mul cx ;umnozaem b*c (ax*cx zapis v ax)
+
+        add ax,bx; ;summa a*3+b*c rezultat zapisivaetsa v ax
+
+        mov bx,[d]
+        mov cx,$02
+        sub bx,cx   ;(d-2) res in the bx
+
+        div bx ;delim ax na dx rezultat v ax
+        add ax,'0' ;convert to ASCII
+
+        ;PRINT RESULT
+        mov bx,ax ;send result from ax to bx, decause ah will be used to print result
+        mov ah,02h  ;DOS function to write ASCII symbols
+        mov dx,bx  ;output
+        int 21h
+
+        mov ah,08h ;zaderzka
+        int 21h
+
+        ret
+
+
+
+prog    db "this program calculates y=(a*3+b*c)/(d-2)$"
+str2    db "where a=1 b=2 c=1 d=3$"
+result_is db "result is equal to $"
+a       dw 1h
+b       dw 2h
+c       dw 1h
+d       dw 7h

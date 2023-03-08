@@ -1,0 +1,22 @@
+program Project1;
+
+
+
+
+
+uses
+  Vcl.Forms,
+  Unit1 in 'Unit1.pas' {Unit1Form},
+  Unitcmpr in 'Unitcmpr.pas' {Unit2Form},
+  Unitexchng in 'Unitexchng.pas' {unit3Form};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TUnit1Form, Unit1Form);
+  Application.CreateForm(TUnit2Form, Unit2Form);
+  Application.CreateForm(Tunit3Form, unit3Form);
+  Application.Run;
+end.

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.041,=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.009,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit4test.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.092,=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.298,=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.398,=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.017,=C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.111,=C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.133,C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\Oleg\Desktop\делфи\LABA7\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.324,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit5test.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.069,C:\Users\Oleg\Desktop\делфи\LABA7\Unit1.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1test.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.324,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit5test.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.094,=C:\Users\Oleg\Desktop\делфи\LABA7\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.396,C:\Users\Oleg\Desktop\делфи\LABA7\Unit2.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit2test.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.116,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit6test.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.563,=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.968,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit7test.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.252,C:\Users\Oleg\Desktop\делфи\LABA7\Unit3.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit3test.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.154,C:\Users\Oleg\Desktop\делфи\LABA7\Unit3.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit3.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.673,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit8test.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.626,C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Oleg\Desktop\делфи\LABA7\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.133,C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Oleg\Desktop\делфи\LABA7\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.481,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit3test.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.116,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit6test.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.069,C:\Users\Oleg\Desktop\делфи\LABA7\Unit1.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1test.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.023,=C:\Users\Oleg\Desktop\делфи\LABA7\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.252,C:\Users\Oleg\Desktop\делфи\LABA7\Unit3.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit3test.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.154,C:\Users\Oleg\Desktop\делфи\LABA7\Unit3.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.396,C:\Users\Oleg\Desktop\делфи\LABA7\Unit2.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit2test.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.242,=C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.836,=C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.425,=C:\Users\Oleg\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.009,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit4test.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.673,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit8test.pas=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.275,C:\Users\Oleg\Desktop\делфи\LABA7\Project1.dproj=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.355,C:\Users\Oleg\Desktop\делфи\LABA7\Project1.dproj=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\test.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.968,C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit1.dfm=C:\Users\Oleg\Desktop\делфи\LABA7_RAZDEL\Unit7test.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

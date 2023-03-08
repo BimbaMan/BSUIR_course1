@@ -1,0 +1,91 @@
+program Laba3;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+
+
+type
+  arr=array[1..500] of integer;
+var
+counter, mc, code, n, i, j, pos, sum, z, k :integer; n1 :string; flag :boolean; a,x:arr;
+
+
+procedure Recursion(i{1},pos{1},sum{0},n:integer;a:arr);
+var j,k:integer;
+begin
+inc(counter);
+    for j:=i to n-1 do
+    begin
+        a[pos]:=j;
+        if sum+j=n then
+        begin
+            for k:=1 to pos do
+                if k>1 then write('+',a[k])
+                else write(a[k]);
+            writeln
+        end
+        else
+         if sum+j<n then
+          Recursion(j,pos+1,sum+j,n,a);
+    end;
+    if counter>mc then mc:=counter;
+dec(counter);
+end;
+
+begin
+    repeat                   //input validation
+     flag:=true;
+     write('Write N from 2 to 501:');
+     readln(n1);
+      val(n1, n, code);
+      if (n<2) or (n>501) then  flag:=false;
+      if (code<>0) or (flag=false) then writeln('Incorrect input!');
+    until (code=0) and (flag);
+
+    writeln('Recursion:');
+    Recursion(1,1,0,n,a);
+    writeln('recursion deep=',mc);
+
+    writeln;
+    writeln('No Recursion:');
+
+
+  z := n;
+  for i := 1 to z do
+    x[i] := 1;
+  for i := 1 to n do
+  begin
+    if i > 1 then write('+');
+    write( x[i],'');
+  end;
+  writeln;
+  repeat
+      i := z - 1;
+      sum := x[z];
+      while (i > 1) and (x[i - 1] <= x[i] ) do
+      begin
+      sum := sum + x[i];
+       dec(i);
+      end;
+     inc( x[i] );
+      z := i + sum - 1;
+     for j := i + 1 to z do
+        x[j] := 1;
+
+    if z=1 then break;
+
+    inc(k);
+    for i := 1 to z do
+    begin
+      if i > 1 then write('+');
+      write( x[i],'');
+    end;
+    writeln;
+  until z = 1;
+
+ readln;
+end.

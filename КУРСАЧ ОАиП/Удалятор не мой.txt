@@ -1,0 +1,14 @@
+procedure element_delete(const TTT:TPHuman);
+begin
+
+      if TTT^.Next<>nil then begin
+      TTT^.Next^.Prev:=TTT^.prev;
+      TTT^.prev^.Next := TTT^.Next;
+      dispose(TTT);
+      end;
+
+      if TTT^.Next=nil then begin
+      TTT^.Prev^.Next:=nil;
+      dispose(TTT);
+      end;
+end;

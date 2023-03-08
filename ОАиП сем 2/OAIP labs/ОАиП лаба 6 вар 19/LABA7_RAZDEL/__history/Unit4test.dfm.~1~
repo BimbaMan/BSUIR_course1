@@ -1,0 +1,64 @@
+object frmNumberDel: TfrmNumberDel
+  Left = 0
+  Top = 0
+  Caption = 'frmNumberDel'
+  ClientHeight = 231
+  ClientWidth = 505
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lblNumberDelTitle: TLabel
+    Left = 0
+    Top = 0
+    Width = 505
+    Height = 23
+    Align = alTop
+    Alignment = taCenter
+    Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1087#1086' '#1087#1086#1088#1103#1076#1082#1086#1074#1086#1084#1091' '#1085#1086#1084#1077#1088#1091
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ExplicitWidth = 340
+  end
+  object edtNumberDel: TEdit
+    Left = 8
+    Top = 64
+    Width = 121
+    Height = 21
+    TabOrder = 0
+  end
+  object rbNumberDelMale: TRadioButton
+    Left = 8
+    Top = 41
+    Width = 57
+    Height = 17
+    Caption = #1046#1077#1085#1080#1093
+    TabOrder = 1
+  end
+  object rbNumberDelFemale: TRadioButton
+    Left = 64
+    Top = 41
+    Width = 57
+    Height = 17
+    Caption = #1053#1077#1074#1077#1089#1090#1072
+    TabOrder = 2
+  end
+  object btnNumberDelDel: TButton
+    Left = 208
+    Top = 198
+    Width = 75
+    Height = 25
+    Caption = #1059#1076#1072#1083#1080#1090#1100
+    TabOrder = 3
+    OnClick = btnNumberDelDelClick
+  end
+end

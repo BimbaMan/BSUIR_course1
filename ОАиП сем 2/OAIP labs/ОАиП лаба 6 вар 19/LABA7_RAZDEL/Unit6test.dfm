@@ -1,0 +1,65 @@
+object frmPairs: TfrmPairs
+  Left = 0
+  Top = 0
+  AutoSize = True
+  BorderIcons = [biSystemMenu]
+  Caption = 'frmPairs'
+  ClientHeight = 441
+  ClientWidth = 765
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lblVariablePairs: TLabel
+    Left = 0
+    Top = 1
+    Width = 378
+    Height = 19
+    Alignment = taCenter
+    AutoSize = False
+    Caption = #1042#1086#1079#1084#1086#1078#1085#1099#1077' '#1087#1072#1088#1099
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblCreatedPairs: TLabel
+    Left = 384
+    Top = 0
+    Width = 381
+    Height = 19
+    Alignment = taCenter
+    AutoSize = False
+    Caption = #1057#1092#1086#1088#1084#1080#1088#1086#1074#1072#1085#1085#1099#1077' '#1087#1072#1088#1099
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object PairsList: TListBox
+    Left = 0
+    Top = 26
+    Width = 378
+    Height = 415
+    ItemHeight = 13
+    TabOrder = 0
+  end
+  object CreatedPairsList: TListBox
+    Left = 384
+    Top = 25
+    Width = 381
+    Height = 416
+    Align = alCustom
+    ItemHeight = 13
+    TabOrder = 1
+  end
+end

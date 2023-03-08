@@ -1,0 +1,50 @@
+unit Unit3test;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TfrmDel = class(TForm)
+    lblDelElem: TLabel;
+    edtDelName: TEdit;
+    edtDelAge: TEdit;
+    edtDelHeight: TEdit;
+    edtDelWeight: TEdit;
+    btnDelDel: TButton;
+    procedure btnDelDelClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmDel: TfrmDel;
+  value:string;
+
+implementation
+uses unit1test;
+{$R *.dfm}
+
+
+procedure TfrmDel.btnDelDelClick(Sender: TObject);
+var i, n:integer;
+ begin
+   element_search(edtDelName.Text, edtDelAge.Text, edtDelHeight.Text, edtDelWeight.Text, PFemHead, PTemporary);
+   if PTemporary<>nil then begin
+   element_delete(PFemHead, PTemporary);
+   end;
+   frmMain.FemaleList.Clear;
+   listbox_print(PFemHead);
+
+  edtDelName.Text:='';
+  edtDelAge.Text:='';
+  edtDelHeight.Text:='';
+  edtDelWeight.Text:='';
+
+ end;
+
+end.

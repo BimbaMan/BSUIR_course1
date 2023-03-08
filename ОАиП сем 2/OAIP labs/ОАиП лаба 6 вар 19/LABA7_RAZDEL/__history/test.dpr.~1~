@@ -1,0 +1,18 @@
+program test;
+
+uses
+  Vcl.Forms,
+  Unit1 in '..\LABA7\Unit1.pas' {frmMain},
+  Unit2 in '..\LABA7\Unit2.pas' {frmAdd},
+  Unit3 in '..\LABA7\Unit3.pas' {frmDel};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TfrmAdd, frmAdd);
+  Application.CreateForm(TfrmDel, frmDel);
+  Application.Run;
+end.

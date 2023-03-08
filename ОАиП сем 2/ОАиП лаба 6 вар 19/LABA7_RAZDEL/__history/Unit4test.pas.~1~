@@ -1,0 +1,54 @@
+unit Unit4test;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TfrmNumberDel = class(TForm)
+    rbNumberDelMale: TRadioButton;
+    rbNumberDelFemale: TRadioButton;
+    lblNumberDelTitle: TLabel;
+    btnNumberDelDel: TButton;
+    edtNumberDel:TEdit;
+    procedure btnNumberDelDelClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmNumberDel: TfrmNumberDel;
+
+implementation
+ uses unit1test, unit3test;
+{$R *.dfm}
+
+
+
+procedure TfrmNumberDel.btnNumberDelDelClick(Sender: TObject);
+begin
+if rbNumberDelFemale.Checked=True then begin
+element_number_search(edtNumberDel.Text, PFemHead, PTemporary);
+if PTemporary<>nil then
+element_delete(PFemHead, PTemporary);
+frmMain.FemaleList.Clear;
+listbox_print(PFemHead, rbNumberDelFemale, rbNumberDelMale);
+end
+else
+if rbNumberDelMale.Checked=True then begin
+element_number_search(edtNumberDel.Text, PMaleHead, PTemporary);
+if PTemporary<>nil then
+element_delete(PMaleHead, PTemporary);
+frmMain.MaleList.Clear;
+listbox_print(PMaleHead, rbNumberDelFemale, rbNumberDelMale);
+end
+else
+ShowMessage('Ошибка! Выберите пол пользователя.');
+edtNumberDel.Text:='';
+end;
+
+end.

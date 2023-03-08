@@ -1,0 +1,18 @@
+program Project2;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+var
+  day    : word;
+
+begin
+
+  day := DayOfWeek(EncodeDate(2021, 03, 21));
+  //начало недели с вс (1) конец в сб (7)
+  writeln(Concat('День недели: '+inttostr(day)));
+  readln;
+end.

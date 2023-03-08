@@ -1,0 +1,151 @@
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+Var
+Str, LastWord :string;
+
+procedure TrimString(Var Str:string);
+var i:integer;
+begin
+  i:=1;
+  while i<=Length(Str) do
+  begin
+   if Str[i]=' ' then delete(Str, i, 1) else i:=i+1;
+   if Str[i+1]<>' ' then begin delete(Str, i, 1); break; end;
+   end;
+  i:=length(Str);
+  while i>=1 do
+  begin
+   if Str[i]=' ' then delete(Str, i, 1) else i:=i+1;
+   if Str[i-1]<>' ' then begin delete(Str, i, 1); break; end;
+   end;
+
+//Result:=Str;
+end;
+function WriteString(Str: string): string;
+var
+  k, i, LenW: integer; WrongInputFlag :boolean;
+begin
+  write('Input your string: '); readln(Str);
+  for i := Length(Str) downto 1 do
+  begin
+    if Str[i] = ' ' then
+      delete(Str, i, 1)
+    else
+      break;
+  end;
+  LenW := 0;
+  Str := ' ' + Str + ' ';
+  for i := Length(Str) downto 1 do
+    if Str[i] <> ' ' then
+    begin
+      Inc(LenW);
+      if (i = 1) or (Str[i - 1] = ' ') then
+      begin
+        for k := i to i + LenW - 1 do
+          if not((Str[k] in ['a' .. 'z']) or (Str[k] in ['A' .. 'Z']) or
+            (Str[k] = ' ')) then
+          begin
+            delete(Str, i, LenW + 1);
+            break;
+          end;
+        LenW := 0;
+      end;
+    end;
+  for i := 1 to Length(Str) do
+  begin
+    if Str[i] = ' ' then
+      delete(Str, i, 1)
+    else
+      break
+  end;
+  Result := Str;
+end;
+function LastWordInString (out lw:string;Str:string) :string;
+Var i:byte;
+begin
+Str:=' '+Str;
+ for i := length(Str) downto 1 do
+  begin
+   if Str[i]=' ' then
+   begin
+   lw:=Copy(Str,i+1,length(Str));
+   break;
+   end;
+  end;
+Writeln('Last word in string: ', lw);
+end;
+procedure ActionOne(const LW:string);
+var StrToProcess, copystr, FirstLetter :string; i, j :integer;
+begin
+Write('Point1: ');
+  StrToProcess:=Str; copystr:='';
+   for i := 1 to length(strToProcess) do
+    begin
+     if strToProcess[i]<>' ' then
+      copystr:=copystr+strToProcess[i];
+     if strToProcess[i]=' ' then
+     begin
+      copystr:=''; FirstLetter:='';
+     end;
+     if (strToProcess[i]=' ') and (strToProcess[i+1]<>' ') then
+      FirstLetter:=strToProcess[i+1];
+     if (strToProcess[i+1]=' ') and (copystr<>lw) then
+     for j := 1 to length(copystr) do
+      begin
+       if copystr[j]=FirstLetter then
+        begin
+         write(copystr,' ');
+         break;
+        end;
+      end;
+    end;
+end;
+procedure ActionTwo(const LW:string);
+ var s, outs: string; ph, left, right, i: integer;
+begin
+s:=' '+Str+' ';
+  repeat
+    ph := pos('ph', s);
+    if ph > 0 then
+     begin
+      for i := ph to length(s) do
+      begin
+       if s[i+1]=' ' then right:=i;
+      end;
+      for i := ph downto 1 do
+      begin
+       if s[i-1]=' ' then left:=i;
+      end;
+      delete(s, ph, 2);
+      insert('f', s, ph);
+      outs:=copy(s,left,right-left);
+     end;
+  until (ph = 0);
+  write('Point2: ');
+  writeln(outs);
+end;
+
+
+begin
+//Input string and correct it
+Str:=WriteString(Str);
+TrimString(Str);
+
+//Last word in the string
+LastWordInString(LastWord, Str);
+
+//P1
+ActionOne(LastWord);
+
+//P2
+ActionTwo(LastWord);
+
+
+readln;
+end.

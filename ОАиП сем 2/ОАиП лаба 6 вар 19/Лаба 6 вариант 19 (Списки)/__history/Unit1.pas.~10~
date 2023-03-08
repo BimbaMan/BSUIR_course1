@@ -1,0 +1,430 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Button1: TButton;
+    Button2: TButton;
+    ListOfZakazi: TMemo;
+    ListOfKyrieri: TMemo;
+    Label3: TLabel;
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    N6: TMenuItem;
+    SaveDialog1: TSaveDialog;
+    OpenDialog1: TOpenDialog;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure N2Click(Sender: TObject);
+    procedure N5Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure N4Click(Sender: TObject);
+    procedure N6Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+{type
+    Student = ^TStudent;
+    TStudent = record
+        Name:string[20];
+        Surname:string[20];
+        Next:Student;
+    end;    }
+
+
+type
+    TZakazZapis = record
+        Number:integer;
+        Adres:String[40];
+        TimeMin:Integer;
+        TimeMax:Integer;
+        Ves:Integer;
+        Obiem:Integer;
+    end;
+    Adr=^TMainZakazZapis;
+    TMainZakazZapis = record
+        Data:TZakazZapis;
+        Adrcled:Adr;
+    end;
+
+    TKyrierZapis = record
+        Number:Integer;
+        Name:String[20];
+        Surname:String[20];
+        SecondName:String[20];
+        WorkTimeMin:Integer;
+        WorkTimeMax:Integer;
+        Gruzopodiem:Integer;
+        MaxObiem:Integer;
+    end;
+    Addr=^TMainKyrierZapis;
+    TMainKyrierZapis = record
+        Data:TKyrierZapis;
+        Addrcled:Addr;
+    end;
+
+var
+  Form1: TForm1;
+  Adr1,AdrCurr: Adr;
+  Addr1,AddrCurr: Addr;
+  FileZakazi: File of TZakazZapis;
+  FileKyrieri: File of TKyrierZapis;
+  //head: Student;
+  //Head:Student;
+  //CurrentStudent:Student;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit2, Unit3, Unit4, Unit5, Unit6, Unit7, Unit8, Unit9, Unit10;
+
+{procedure AddElement(var Spisok1:Student; Name,Surname:String);
+var
+    Temp:Student;
+begin
+    if Spisok1 = nil then
+    begin
+        GetMem(Spisok1,Sizeof(TStudent));
+        Temp:=Spisok1;
+    end
+    else
+    begin
+        Temp:=Spisok1;
+        while Temp^.Next <> nil do
+            temp:=temp^.Next;
+        GetMem(Temp^.Next,SizeOf(TStudent));
+        Temp:=Temp^.Next;
+    end;
+    Temp.Next:=nil;
+    Temp^.Name:=Name;
+    Temp^.Surname:=Surname;
+end;   }
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+    Form2.Show;
+   { if Adr1 = nil then
+    begin
+        New(Adr1);
+        AdrCurr:= Adr1;
+        AdrCurr^.Data.Number:= StrToInt(Edit1.Text);
+        AdrCurr^.Data.Adres:= Edit2.Text;
+        AdrCurr^.Data.TimeMin:= StrToInt(Edit3.Text);
+        AdrCurr^.Data.TimeMax:= StrToInt(Edit4.Text);
+        AdrCurr^.Data.Ves:= StrToInt(Edit5.Text);
+        AdrCurr^.Data.Obiem:= StrToInt(Edit6.Text);
+        AdrCurr^.Adrcled:= nil;
+    end
+    else
+    begin
+        New(AdrCurr^.Adrcled);
+        AdrCurr:= AdrCurr^.Adrcled;
+        AdrCurr^.Data.Number:= StrToInt(Edit1.Text);
+        AdrCurr^.Data.Adres:= Edit2.Text;
+        AdrCurr^.Data.TimeMin:= StrToInt(Edit3.Text);
+        AdrCurr^.Data.TimeMax:= StrToInt(Edit4.Text);
+        AdrCurr^.Data.Ves:= StrToInt(Edit5.Text);
+        AdrCurr^.Data.Obiem:= StrToInt(Edit6.Text);
+        AdrCurr^.Adrcled:= nil;
+    end;
+    ListOfZakazi.Lines.Add('Заказ нормер: '+IntToStr(AdrCurr.Data.Number)+#13#10+'Адрес доставки: '+AdrCurr.Data.Adres+#13#10+'Время доставки: от '+IntToStr(AdrCurr.Data.TimeMin)+' до '+IntToStr(AdrCurr.Data.TimeMax)+' мин.'+#13#10+'Вес: '+IntToStr(AdrCurr.Data.Ves)+' кг'+#13#10+'Объём: '+IntToStr(AdrCurr.Data.Obiem)+' м^3'+#13#10);     }
+   {// AddElement(Head,Edit1.Text,Edit2.Text);
+    if Head = nil then
+    begin
+        GetMem(Head,Sizeof(TStudent));
+        CurrentStudent:=Head;
+    end
+    else
+    begin
+        CurrentStudent:=Head;
+      //  while CurrentStudent^.Next <> nil do
+       //     CurrentStudent:=CurrentStudent^.Next;
+        GetMem(CurrentStudent^.Next,SizeOf(TStudent));
+        CurrentStudent:=CurrentStudent^.Next;
+    end;
+    CurrentStudent.Next:=nil;
+    CurrentStudent^.Name:=Edit1.Text;
+    CurrentStudent^.Surname:=Edit2.Text;
+    Edit1.Text:='';
+    Edit2.Text:='';
+  //  while Head <> nil do
+  //  begin
+        Memo1.Lines.Add(Head.Name+'   '+Head.Surname+#13);
+        Head:=Head^.Next;
+  //  end; }
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+{var
+    Curr:Student;
+    n:integer;
+    st:string;}
+begin
+    Form3.Show;
+   { n:=0;
+    st:='';
+    Curr:=head;
+    while Curr <> Nil do
+    begin
+        n:=n+1;
+        st := st + Curr^.Name + ' ' + Curr^.Surname +#13;
+        Curr:=Curr^.Next;
+    end;
+    if n <> 0
+        then ShowMessage('Список:' + #13 + st)
+        else ShowMessage('В списке нет элементов.');    }
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+    Form4.Show;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+    Form5.Show;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+    Form6.Show;
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+    Form7.Show;
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+begin
+    Form8.Show;
+end;
+
+procedure TForm1.FormActivate(Sender: TObject);
+begin
+   // Head:=nil;
+    //  Adr1:= nil;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+    New(Adr1);
+    AdrCurr:=Adr1;
+    AdrCurr^.Adrcled:= nil;
+
+    New(Addr1);
+    AddrCurr:=Addr1;
+    AddrCurr^.Addrcled:= nil;
+end;
+
+procedure TForm1.N2Click(Sender: TObject);
+begin
+    AssignFile(FileZakazi,'Zakazi.dat');
+    Rewrite(FileZakazi);
+    AdrCurr:=Adr1;
+    while AdrCurr^.Adrcled <> nil do
+    begin
+        AdrCurr:=AdrCurr^.Adrcled;
+        AdrCurr.Data.Number:=AdrCurr^.Data.Number;
+        AdrCurr.Data.Adres:=AdrCurr^.Data.Adres;
+        AdrCurr.Data.TimeMin:=AdrCurr^.Data.TimeMin;
+        AdrCurr.Data.TimeMax:=AdrCurr^.Data.TimeMax;
+        AdrCurr.Data.Ves:=AdrCurr^.Data.Ves;
+        AdrCurr.Data.Obiem:=AdrCurr^.Data.Obiem;
+        Write(FileZakazi,AdrCurr.Data);
+    end;
+    CloseFile(FileZakazi);
+    ShowMessage('Файл сохранён успешно!');
+
+  {  if SaveDialog1.Execute then
+    begin
+        AssignFile(FileZakazi,SaveDialog1.FileName);
+        Rewrite(FileZakazi);
+        AdrCurr:=Adr1;
+       // while AdrCurr^.Adrcled <> nil do
+        if (AdrCurr = Adr1) and (Adr1 <> nil) then
+        begin
+            AdrCurr.Data.Number:=AdrCurr^.Data.Number;
+            AdrCurr.Data.Adres:=AdrCurr^.Data.Adres;
+            AdrCurr.Data.TimeMin:=AdrCurr^.Data.TimeMin;
+            AdrCurr.Data.TimeMax:=AdrCurr^.Data.TimeMax;
+            AdrCurr.Data.Ves:=AdrCurr^.Data.Ves;
+            AdrCurr.Data.Obiem:=AdrCurr^.Data.Obiem;
+            Write(FileZakazi,AdrCurr.Data);
+            AdrCurr:=AdrCurr^.Adrcled;
+        end
+        else
+        while AdrCurr <> nil do
+        begin
+            AdrCurr.Data.Number:=AdrCurr^.Data.Number;
+            AdrCurr.Data.Adres:=AdrCurr^.Data.Adres;
+            AdrCurr.Data.TimeMin:=AdrCurr^.Data.TimeMin;
+            AdrCurr.Data.TimeMax:=AdrCurr^.Data.TimeMax;
+            AdrCurr.Data.Ves:=AdrCurr^.Data.Ves;
+            AdrCurr.Data.Obiem:=AdrCurr^.Data.Obiem;
+            Write(FileZakazi,AdrCurr.Data);
+            AdrCurr:=AdrCurr^.Adrcled;
+        end;
+        CloseFile(FileZakazi);
+    end;
+    ShowMessage('Файл сохранён успешно!');    }
+end;
+
+procedure TForm1.N4Click(Sender: TObject);
+begin
+    AssignFile(FileKyrieri,'Kyrieri.dat');
+    Rewrite(FileKyrieri);
+    AddrCurr:=Addr1;
+    while AddrCurr^.Addrcled <> nil do
+    begin
+        AddrCurr:=AddrCurr^.Addrcled;
+        AddrCurr.Data.Number:=AddrCurr^.Data.Number;
+        AddrCurr.Data.Name:=AddrCurr^.Data.Name;
+        AddrCurr.Data.Surname:=AddrCurr^.Data.Surname;
+        AddrCurr.Data.SecondName:=AddrCurr^.Data.SecondName;
+        AddrCurr.Data.WorkTimeMin:=AddrCurr^.Data.WorkTimeMin;
+        AddrCurr.Data.WorkTimeMax:=AddrCurr^.Data.WorkTimeMax;
+        AddrCurr.Data.Gruzopodiem:=AddrCurr^.Data.Gruzopodiem;
+        AddrCurr.Data.MaxObiem:=AddrCurr^.Data.MaxObiem;
+        Write(FileKyrieri,AddrCurr.Data);
+    end;
+    CloseFile(FileKyrieri);
+    ShowMessage('Файл сохранён успешно!');
+end;
+
+procedure TForm1.N5Click(Sender: TObject);
+begin
+    ListOfZakazi.Lines.Clear;
+    AssignFile(FileZakazi,'Zakazi.dat');
+    Reset(FileZakazi);
+    Seek(FileZakazi,0);
+    AdrCurr:=Adr1;
+    while not Eof(FileZakazi) do
+    begin
+        New(AdrCurr^.Adrcled);
+        AdrCurr:=AdrCurr^.Adrcled;
+        Read(FileZakazi,AdrCurr.Data);
+        AdrCurr^.Data.Number:= AdrCurr.Data.Number;
+        AdrCurr^.Data.Adres:=AdrCurr.Data.Adres;
+        AdrCurr^.Data.TimeMin:=AdrCurr.Data.TimeMin;
+        AdrCurr^.Data.TimeMax:=AdrCurr.Data.TimeMax;
+        AdrCurr^.Data.Ves:=AdrCurr.Data.Ves;
+        AdrCurr^.Data.Obiem:=AdrCurr.Data.Obiem;
+        AdrCurr^.Adrcled:= nil;
+        ListOfZakazi.Lines.Add('Заказ нормер: '+IntToStr(AdrCurr.Data.Number)+#13#10+'Адрес доставки: '+AdrCurr.Data.Adres+#13#10+'Время доставки: с '+IntToStr(AdrCurr.Data.TimeMin)+' до '+IntToStr(AdrCurr.Data.TimeMax)+' часов'+#13#10+'Вес: '+IntToStr(AdrCurr.Data.Ves)+' кг'+#13#10+'Объём: '+IntToStr(AdrCurr.Data.Obiem)+' м^3'+#13#10);
+
+    end;
+    CloseFile(FileZakazi);
+    ShowMessage('Вставка прошла успешно!');
+   { if OpenDialog1.Execute then
+    begin
+  //      Adr1:=nil;
+        ListOfZakazi.Lines.Clear;
+        AssignFile(FileZakazi,OpenDialog1.FileName);
+        Reset(FileZakazi);
+  //      Seek(FileZakazi,0);
+     //   n:=0;
+      //  AdrCurr:=Adr1;
+        while not Eof(FileZakazi)  do
+        begin
+       //     Seek(FileZakazi,n);
+            New(AdrCurr);
+            Read(FileZakazi,AdrCurr.Data);
+            AdrCurr^.Adrcled:=nil;
+            if FileZakazi = nil
+                then FileZakazi:=AdrCurr
+            else
+            begin
+                Adr1:=FileZakazi;
+                while Adr1^.Adrcled <> nil do
+                    Adr1:=Adr1^.Adrcled;
+                Adr1^.Adrcled:=AdrCurr;
+            end;
+
+            if Adr1 = nil then
+            begin
+                New(Adr1);
+                AdrCurr:= Adr1;
+                AdrCurr^.Data.Number:=AdrCurr.Data.Number;
+                AdrCurr^.Data.Adres:=AdrCurr.Data.Adres;
+                AdrCurr^.Data.TimeMin:=AdrCurr.Data.TimeMin;
+                AdrCurr^.Data.TimeMax:=AdrCurr.Data.TimeMax;
+                AdrCurr^.Data.Ves:=AdrCurr.Data.Ves;
+                AdrCurr^.Data.Obiem:=AdrCurr.Data.Obiem;
+                AdrCurr^.Adrcled:= nil;
+            end
+            else
+            begin
+                New(AdrCurr^.Adrcled);
+                AdrCurr:= AdrCurr^.Adrcled;
+                AdrCurr^.Data.Number:=AdrCurr.Data.Number;
+                AdrCurr^.Data.Adres:=AdrCurr.Data.Adres;
+                AdrCurr^.Data.TimeMin:=AdrCurr.Data.TimeMin;
+                AdrCurr^.Data.TimeMax:=AdrCurr.Data.TimeMax;
+                AdrCurr^.Data.Ves:=AdrCurr.Data.Ves;
+                AdrCurr^.Data.Obiem:=AdrCurr.Data.Obiem;
+                AdrCurr^.Adrcled:= nil;
+            end;
+            ListOfZakazi.Lines.Add('Заказ нормер: '+IntToStr(AdrCurr.Data.Number)+#13#10+'Адрес доставки: '+AdrCurr.Data.Adres+#13#10+'Время доставки: с '+IntToStr(AdrCurr.Data.TimeMin)+' до '+IntToStr(AdrCurr.Data.TimeMax)+' часов'+#13#10+'Вес: '+IntToStr(AdrCurr.Data.Ves)+' кг'+#13#10+'Объём: '+IntToStr(AdrCurr.Data.Obiem)+' м^3'+#13#10);
+           // if AdrCurr^.Adrcled <> nil then
+        //   inc(n);
+        end;
+        CloseFile(FileZakazi);
+    end;
+    ShowMessage('Вставка прошла успешно!');      }
+end;
+
+procedure TForm1.N6Click(Sender: TObject);
+begin
+    ListOfKyrieri.Lines.Clear;
+    AssignFile(FileKyrieri,'Kyrieri.dat');
+    Reset(FileKyrieri);
+    Seek(FileKyrieri,0);
+    AddrCurr:=Addr1;
+    while not Eof(FileKyrieri) do
+    begin
+        New(AddrCurr^.Addrcled);
+        AddrCurr:=AddrCurr^.Addrcled;
+        Read(FileKyrieri,AddrCurr.Data);
+        AddrCurr^.Data.Number:=AddrCurr.Data.Number;
+        AddrCurr^.Data.Name:=AddrCurr.Data.Name;
+        AddrCurr^.Data.Surname:=AddrCurr.Data.Surname;
+        AddrCurr^.Data.SecondName:=AddrCurr.Data.SecondName;
+        AddrCurr^.Data.WorkTimeMin:=AddrCurr.Data.WorkTimeMin;
+        AddrCurr^.Data.WorkTimeMax:=AddrCurr.Data.WorkTimeMax;
+        AddrCurr^.Data.Gruzopodiem:=AddrCurr.Data.Gruzopodiem;
+        AddrCurr^.Data.MaxObiem:=AddrCurr.Data.MaxObiem;
+        AddrCurr^.Addrcled:= nil;
+        ListOfKyrieri.Lines.Add('Номер курьера: '+IntToStr(AddrCurr.Data.Number)+#13#10+'ФИО: '+AddrCurr.Data.Surname+' '+AddrCurr.Data.Name+' '+AddrCurr.Data.SecondName+#13#10+'Время работы: с '+IntToStr(AddrCurr.Data.WorkTimeMin)+' до '+IntToStr(AddrCurr.Data.WorkTimeMax)+' часов'+#13#10+'Грузоподъёмность автомобиля: '+IntToStr(AddrCurr.Data.Gruzopodiem)+' кг'+#13#10+'Максимальный объём груза: '+IntToStr(AddrCurr.Data.MaxObiem)+' м^3'+#13#10);
+    end;
+    CloseFile(FileKyrieri);
+    ShowMessage('Вставка прошла успешно!');
+end;
+
+end.

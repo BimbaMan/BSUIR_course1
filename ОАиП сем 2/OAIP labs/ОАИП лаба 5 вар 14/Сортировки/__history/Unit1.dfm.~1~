@@ -1,0 +1,109 @@
+object Unit1Form: TUnit1Form
+  Left = 0
+  Top = 62
+  Caption = 'Form1'
+  ClientHeight = 375
+  ClientWidth = 752
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ImageColors: TImage
+    Left = 17
+    Top = 200
+    Width = 145
+    Height = 145
+  end
+  object StringGridValue: TStringGrid
+    Left = 168
+    Top = 32
+    Width = 561
+    Height = 313
+    ColCount = 7
+    DefaultColWidth = 78
+    DefaultRowHeight = 30
+    Enabled = False
+    FixedCols = 0
+    RowCount = 10
+    FixedRows = 0
+    ScrollBars = ssNone
+    TabOrder = 0
+  end
+  object StringGridHeader: TStringGrid
+    Left = 248
+    Top = 1
+    Width = 481
+    Height = 33
+    ColCount = 3
+    DefaultColWidth = 156
+    DefaultRowHeight = 30
+    Enabled = False
+    FixedCols = 0
+    RowCount = 1
+    FixedRows = 0
+    ScrollBars = ssNone
+    TabOrder = 1
+  end
+  object EditMax: TEdit
+    Left = 96
+    Top = 104
+    Width = 27
+    Height = 21
+    TabOrder = 2
+    Text = '1000'
+  end
+  object EditMin: TEdit
+    Left = 40
+    Top = 104
+    Width = 33
+    Height = 21
+    TabOrder = 3
+    Text = '-1000'
+  end
+  object ButtonSort: TButton
+    Left = 40
+    Top = 152
+    Width = 87
+    Height = 25
+    Caption = 'Sort And Draw'
+    TabOrder = 4
+    OnClick = ButtonSortClick
+  end
+  object StaticTextMin: TStaticText
+    Left = 48
+    Top = 129
+    Width = 20
+    Height = 17
+    Caption = 'min'
+    TabOrder = 5
+  end
+  object StaticTextMax: TStaticText
+    Left = 103
+    Top = 129
+    Width = 24
+    Height = 17
+    Caption = 'max'
+    TabOrder = 6
+  end
+  object ComboBoxWay: TComboBox
+    Left = 17
+    Top = 56
+    Width = 145
+    Height = 21
+    Style = csDropDownList
+    ItemIndex = 0
+    TabOrder = 7
+    Text = '10'
+    Items.Strings = (
+      '10'
+      '100'
+      '2000')
+  end
+end

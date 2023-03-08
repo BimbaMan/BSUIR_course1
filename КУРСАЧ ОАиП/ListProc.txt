@@ -1,0 +1,162 @@
+types
+    TPWorker = ^TWorker; 
+
+    TFullName = record
+        Name, Surname, Patronymic: string[20]
+    end; 
+    
+    TWorker = record
+        FullName: TFullName;
+        Birthday: TDate;
+        Specialty, Post: string[20];
+        Is_HighEdu: boolean;
+        SalaryMin: smallint;
+
+        Next, Prev: TPWorker;
+    end;
+    
+implementation
+
+
+procedure AddRec_W(var Head: TPWorker; const Name, Surname, Patronymic: string;
+  const Birthday: TDate; const Specialty, Post: string; const Is_HighEdu: boolean;
+  const SalaryMin: smallint);
+var
+  Curr, tmp: TPWorker;
+
+begin
+  if Head = nil then
+  begin
+    Curr := New(TPWorker);
+
+    Head := Curr;
+    Head^.Next := nil;
+    Head^.Prev := nil;
+  end
+  else
+  begin
+    Curr := Head;
+    while Curr^.Next <> nil do
+      Curr := Curr^.Next;
+
+    tmp := Curr;
+    Curr := New(TPWorker);
+
+    tmp^.Next := Curr;
+    Curr^.Prev := tmp;
+    Curr^.Next := nil;
+  end;
+
+  Curr^.FullName.Name := Name;
+  Curr^.FullName.Surname := Surname;
+  Curr^.FullName.Patronymic := Patronymic;
+  Curr^.Birthday := Birthday;
+  Curr^.Specialty := Specialty;
+  Curr^.Post := Post;
+  Curr^.Is_HighEdu := Is_HighEdu;
+  Curr^.SalaryMin := SalaryMin;
+end; 
+
+
+procedure DelRec_W(var Head: TPWorker; const Rec: TPWorker);
+begin
+  if (Rec = Head) and (Rec^.Next = nil) then
+  begin
+    Dispose(Rec);
+    Head := nil;
+    //ShowMessage('Удаление одной единственной записи');
+  end
+  else if Rec = Head then
+  begin
+    Head := Rec^.Next;
+    Rec^.Next^.Prev := nil;
+    Rec^.Next := nil;
+    Dispose(Rec);
+    //ShowMessage('Удаление первой записи');
+  end
+  else if Rec^.Next = nil then
+  begin
+    Rec^.Prev^.Next := nil;
+    Rec^.Prev := nil;
+    Dispose(Rec);
+    //ShowMessage('Удаление последней записи');
+  end
+  else
+  begin
+    Rec^.Prev^.Next := Rec^.Next;
+    Rec^.Next^.Prev := Rec^.Prev;
+    Rec^.Prev := nil;
+    Rec^.Next := nil;
+    Dispose(Rec);
+    //ShowMessage('Удаление любой другой записи');
+  end;
+end;  
+
+
+function FindRec_NSP_W(const Name, Surname, Patronymic: string;
+  const Head: TPWorker): TPWorker;
+var
+  Curr: TPWorker;
+
+begin
+  Curr := Head;
+  while Curr <> nil do
+  begin
+    if (Curr^.FullName.Name <> Name) or (Curr^.FullName.Surname <> Surname) or
+      (Curr^.FullName.Patronymic <> Patronymic) then
+      Curr := Curr^.Next
+    else
+    begin
+      Result := Curr;
+      exit;
+    end;
+  end;
+  Result := nil;
+end;  
+
+
+procedure SaveList_W(const Head: TPWorker);
+var
+  F: file of TWorker;
+  Curr: TPWorker;
+
+begin
+  AssignFile(F, '/home/eiyniy/Загрузки/lab 6/SavesW.txt');
+  Rewrite(F);
+
+  Curr := Head;
+  while Curr <> nil do
+  begin
+    Write(F, Curr^);
+    Curr := Curr^.Next;
+  end;
+end;    
+
+
+function LoadList_W(const Path: string): TPWorker;
+var
+  F: file of TWorker;
+  Head: TPWorker;
+  tmp: TWorker;
+
+begin
+  AssignFile(F, Path);
+  if FileExists(Path) then
+    Reset(F)
+  else
+  begin
+    //ShowMessage('File doesn`t exists');
+    exit;
+  end;
+
+  Head := nil;
+  while not EOF(F) do
+  begin
+    Read(F, tmp);
+    AddRec_W(Head, tmp.FullName.Name, tmp.FullName.Surname,
+      tmp.FullName.Patronymic, tmp.Birthday, tmp.Specialty, tmp.Post,
+      tmp.Is_HighEdu, tmp.SalaryMin);
+  end;
+
+  Result := Head;
+end;

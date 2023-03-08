@@ -1,0 +1,140 @@
+procedure TForm_Main.Combo_sortChange(Sender: TObject);
+var List :OrgTechAPI.TList; i, j, cnt :integer;
+begin
+if Data_table.Cells[0, 1]='' then
+ begin
+  Combo_sort.ItemIndex:=0;
+ end
+ else
+ begin
+  case Combo_sort.ItemIndex of
+   0:    //нет
+   begin
+    OrgTechAPI.LoadList(List);
+    if List.head=nil then
+     begin
+     for i := 0 to Data_table.ColCount-1 do
+      Data_table.Cells[i,1]:='';
+      end
+    else FillTable(List);
+   end;
+   1:    //номер возрастание
+   begin
+    Cnt := Data_table.RowCount;
+   for j := 1 to Cnt - 1 do
+    for i := j+1 to Cnt do
+    begin
+      if Data_table.Cells[1, i] < Data_table.Cells[1, j] then
+      with Data_table do
+      begin
+        Rows[Cnt] := Rows[i];
+        Rows[i] := Rows[j];
+        Rows[j] := Rows[Cnt];
+      end;
+    end;
+   end;
+   2:    //номер убываение
+   begin
+    Cnt := Data_table.RowCount;
+   for j := 1 to Cnt - 1 do
+    for i := j+1 to Cnt do
+    begin
+      if Data_table.Cells[1, i] > Data_table.Cells[1, j] then
+      with Data_table do
+      begin
+        Rows[Cnt] := Rows[i];
+        Rows[i] := Rows[j];
+        Rows[j] := Rows[Cnt];
+      end;
+    end;
+   end;
+   3:    //наименование
+   begin
+     Cnt := Data_table.RowCount;
+   for j := 1 to Cnt - 1 do
+    for i := j+1 to Cnt do
+    begin
+      if AnsiLowerCase(Data_table.Cells[2, i]) < AnsiLowerCase(Data_table.Cells[2, j]) then
+      with Data_table do
+      begin
+        Rows[Cnt] := Rows[i];
+        Rows[i] := Rows[j];
+        Rows[j] := Rows[Cnt];
+      end;
+    end;
+   end;
+   4:    //категория
+   begin
+     Cnt := Data_table.RowCount;
+   for j := 1 to Cnt - 1 do
+    for i := j+1 to Cnt do
+    begin
+      if AnsiLowerCase(Data_table.Cells[3, i]) < AnsiLowerCase(Data_table.Cells[3, j]) then
+      with Data_table do
+      begin
+        Rows[Cnt] := Rows[i];
+        Rows[i] := Rows[j];
+        Rows[j] := Rows[Cnt];
+      end;
+    end;
+   end;
+   5:    //наличие гарантии
+   begin
+     Cnt := Data_table.RowCount;
+   for j := 1 to Cnt - 1 do
+    for i := j+1 to Cnt do
+    begin
+      if (Data_table.Cells[4,j]='нет') and (Data_table.Cells[4,i]<>'нет') then
+       with Data_table do
+      begin
+       Rows[Cnt] := Rows[j];
+        Rows[j] := Rows[i];
+        Rows[i] := Rows[Cnt];
+        continue;
+      end;
+      if (Data_table.Cells[4,i]='нет') and (Data_table.Cells[4,j]<>'нет') then
+        continue;
+      if (Data_table.Cells[4,i]='нет') and (Data_table.Cells[4,j]='нет') then
+       continue;
+      if strtodate(Data_table.Cells[4, i]) > strtodate(Data_table.Cells[4, j]) then
+      with Data_table do
+      begin
+        Rows[Cnt] := Rows[i];
+        Rows[i] := Rows[j];
+        Rows[j] := Rows[Cnt];
+      end;
+    end;
+   end;
+   6:   //офис
+   begin
+     Cnt := Data_table.RowCount;
+   for j := 1 to Cnt-1 do
+    for i := j+1 to Cnt do
+    begin
+      if AnsiLowerCase(Data_table.Cells[6, i]) < AnsiLowerCase(Data_table.Cells[6, j]) then
+      with Data_table do
+      begin
+        Rows[Cnt] := Rows[i];
+        Rows[i] := Rows[j];
+        Rows[j] := Rows[Cnt];
+      end;
+    end;
+   end;
+   7:   //ответственный
+   begin
+     Cnt := Data_table.RowCount;
+   for j := 1 to Cnt - 1 do
+    for i := j+1 to Cnt do
+    begin
+      if AnsiLowerCase(Data_table.Cells[8, i]) < AnsiLowerCase(Data_table.Cells[8, j]) then
+      with Data_table do
+      begin
+        Rows[Cnt] := Rows[i];
+        Rows[i] := Rows[j];
+        Rows[j] := Rows[Cnt];
+      end;
+    end;
+   end;
+  end;
+ end;
+end;

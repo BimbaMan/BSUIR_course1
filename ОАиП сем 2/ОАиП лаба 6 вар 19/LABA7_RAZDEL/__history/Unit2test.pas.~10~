@@ -1,0 +1,57 @@
+unit Unit2test;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TfrmAdd = class(TForm)
+    lblAddTitle: TLabel;
+    edtAddName: TEdit;
+    edtAddAge: TEdit;
+    edtAddHeight: TEdit;
+    edtAddWeight: TEdit;
+    btnAddAdd: TButton;
+    rbAddMale: TRadioButton;
+    rbAddFemale: TRadioButton;
+    procedure btnAddAddClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAdd: TfrmAdd;
+implementation
+
+uses Unit1test;
+
+{$R *.dfm}
+
+procedure TfrmAdd.btnAddAddClick(Sender: TObject);
+begin
+  if rbAddFemale.Checked=True then begin
+    list_elem_create(edtAddName.Text, strtoint(edtAddAge.Text), strtoint(edtAddHeight.Text), strtoint(edtAddWeight.Text), PFemHead);
+    frmMain.FemaleList.Clear;
+    listbox_print(PFemHead, rbAddFemale, rbAddMale);
+  end;
+
+  if rbAddMale.Checked=True then begin
+    list_elem_create(edtAddName.Text, strtoint(edtAddAge.Text), strtoint(edtAddHeight.Text), strtoint(edtAddWeight.Text), PMaleHead);
+    frmMain.MaleList.Clear;
+    listbox_print(PMaleHead, rbAddFemale, rbAddMale);
+  end;
+
+  if (rbAddMale.Checked=False) and (rbAddFemale.Checked=False) then
+  ShowMessage('Ошибка! Выберите пол пользователя.');
+
+ edtAddName.Text:='';
+ edtAddAge.Text:='';
+ edtAddHeight.Text:='';
+ edtAddWeight.Text:='';
+end;
+
+end.

@@ -1,0 +1,45 @@
+program Project2;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils,
+  Math;
+
+var
+ x, eps, f1, f2, sum2, st1, st2: double;
+ k: integer;
+
+begin
+x:=-0.6;
+eps:=0.001;
+while eps>0.000001 do
+ begin
+ while x<0.41 do
+  begin
+   f2:=0;
+   k:=1;
+   sum2:=0;
+   st1:=power(-1,k+1);
+   st2:=power(x,2*k+1);
+   f1:=0.5*arctan(x)*ln(1+x*x);
+   repeat
+     sum2:=sum2+1/(2*k-1)+1/(2*k);
+     f2:=f2+((st1*st2)/(2*k+1)*sum2);
+     st1:=st1*(-1);
+     st2:=st2*x*x;
+     k:=k+1;
+   until f2<eps;
+   writeln('e= ', eps:2:7,'   x= ',x:2:4,'    f1= ',f1:2:5,'    f2= ',f2:4:6);
+   if x=-0.05 then
+   x:=0
+   else
+   x:=x+0.05;
+  end;
+  eps:=eps*0.1;
+ end;
+readln;
+end.
+

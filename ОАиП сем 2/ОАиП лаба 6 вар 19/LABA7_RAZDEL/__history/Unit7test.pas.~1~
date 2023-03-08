@@ -1,0 +1,33 @@
+unit Unit7test;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TfrmSave = class(TForm)
+    lblSaveTitle: TLabel;
+    rbSaveMale: TRadioButton;
+    rbSaveFemale: TRadioButton;
+    edtSave: TEdit;
+    btnSave: TButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmSave: TfrmSave;
+
+implementation
+uses Unit1test;
+
+{$R *.dfm}
+
+
+
+
+end.

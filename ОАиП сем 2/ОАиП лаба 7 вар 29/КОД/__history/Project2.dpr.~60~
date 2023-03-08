@@ -1,0 +1,152 @@
+program Project2;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+Var
+VerifiedString, LastWord :string;
+
+procedure WriteString(var VerifiedString:string);
+Var InputString :string; i :byte; WrongInputFlag :boolean; Counter :integer;
+begin
+ repeat
+  WrongInputFlag:=false;
+  write('Input your string: '); readln(InputString);
+  Counter:=0; i:=1;
+  while i<=length(InputString) do
+   begin
+    if not (InputString[i] in ['a'..'z','A'..'Z',' ']) then delete(InputString,i,1)
+     else inc(i);
+   end;
+  for i := 1 to Length(InputString) do
+   begin
+    if InputString[i]=' ' then
+     Inc(Counter);
+    if Counter=length(InputString) then
+     begin Writeln('String is empty.'); WrongInputFlag:=true; break; end;
+   end;
+ until (WrongInputFlag=false);
+ Trim(InputString);
+ VerifiedString:=InputString;
+end;
+
+function LastWordInString (out LW:string;Str:string) :string;
+Var i:byte;
+begin
+Str:=' '+Str;
+ for i := length(Str) downto 1 do
+  begin
+   if Str[i]=' ' then
+   begin
+   LW:=Copy(Str,i+1,length(Str));
+   break;
+   end;
+  end;
+end;
+procedure ActionOne;
+var s: string;
+    Words: array [1..127] of string;
+    i, j, n, m: byte;
+    flag: boolean;
+    f: set of byte;
+begin
+  m := 0;
+  f := [];
+  s := ' ' + VerifiedString + ' ';
+  for i := 2 to length(s) - 1 do
+    begin
+      if (s[i - 1] = ' ') and (s[i] <> ' ') then n := i;
+      if (s[i] <> ' ') and (s[i + 1] = ' ') then
+        begin
+          inc(m);
+          Words[m] := copy(s, n, i - n + 1);
+        end;
+    end;
+
+  writeln('Inverse pairs:');
+  for i := 1 to m - 1 do
+   for j := i + 1 to m do
+    if (length(Words[i]) = length(Words[j])) and not(i in f) and not(j in f) and (Words[i]<>LastWord) and (Words[j]<>LastWord) then
+      begin
+        flag := true;
+        for n := 1 to length(Words[i]) div 2 + 1 do
+        if Words[i][n] <> Words[j][length(Words[j]) - n + 1] then
+          begin
+            flag := false;
+            break
+          end;
+        if flag then
+          begin
+            f := f + [i, j];
+            writeln(Words[i], ', ', Words[j]);
+          end;
+      end;
+  if f = [] then writeln('Pairs not found.');
+end;
+procedure ActionTwo(const LW);
+Var Str, tempstr :string; Words: array [1..127] of string; Count: array [1..127] of integer; i, j, n, m: byte; f: set of byte; temp, counter :integer;
+begin
+ Str:=UpperCase(VerifiedString);
+
+  m := 0; counter:=0;
+  Str := ' ' + UpperCase(VerifiedString) + ' ';
+  for i := 2 to length(Str) - 1 do
+    begin
+      if Str[i] in ['A','E','I','O','U','Y'] then  Inc(counter);
+      if (Str[i - 1] = ' ') and (Str[i] <> ' ') then n := i;
+      if (Str[i] <> ' ') and (Str[i + 1] = ' ') then
+        begin
+          if copy(Str, n, i - n + 1)<>UpperCase(LastWord) then
+          begin
+           inc(m);
+           Words[m]:=copy(Str, n, i - n + 1);
+           Count[m]:=counter;
+           counter:=0;
+           //Writeln(Words[m]);
+          end
+          else
+          begin
+           counter:=0;
+          end;
+        end;
+    end;
+
+ for i := 1 to m-1 do
+  for j := i+1 to m do
+    if Count[i]<Count[j] then
+    begin
+     temp:=Count[i];
+     Count[i]:=Count[j];
+     Count[j]:=temp;
+
+     tempstr:=Words[i];
+     Words[i]:=Words[j];
+     Words[j]:=tempstr;
+    end;
+
+  for i := 1 to m do
+    begin
+    if i<>m then
+     write(LowerCase(Words[i]),', ')
+    else
+     write(LowerCase(Words[i]));
+    end;
+end;
+
+
+begin
+//Input string, check it and trim; right string in VerifiedString
+WriteString(VerifiedString);
+//Find last word in the stringS
+LastWordInString(LastWord, VerifiedString);
+//point1
+ActionOne;
+//point2
+ActionTwo(LastWord);
+
+
+readln;
+end.

@@ -1,0 +1,111 @@
+program Laba3;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+
+type arr=array[1..500] of integer;
+var n, code, counter, sum, j, first, col, col1, i :integer; a :arr; n1, s1, rs :string; flag, breakflag :boolean;
+
+
+procedure Recursion(i{1},pos{1},sum{0},n:integer;a:arr);
+var j,k:integer;
+begin
+inc(counter);
+    for j:=i to n-1 do
+    begin
+        a[pos]:=j;
+        if sum+j=n then
+        begin
+            for k:=1 to pos do
+                if k>1 then write('+',a[k])
+                else write(a[k]);
+            writeln
+        end
+        else
+         if sum+j<n then
+          Recursion(j,pos+1,sum+j,n,a);
+    end;
+end;
+
+function P(n,k: byte): word;         //количество сумм
+Begin
+ if k=0 then
+  if n=0 then P:=1
+  else P:=0
+ else
+  if (k<=n) then P:=P(n,k-1)+P(n-k,k)
+  else P:=P(n,n);
+End;
+
+function SumOfEl(a:arr):integer;
+var i:integer;
+begin
+Result:=0;
+  for i := 1 to n do
+   Result:=Result+a[i];
+end;
+
+begin
+
+    repeat                   //input validation
+     flag:=true;
+     write('Write N from 1 to 501:');
+     readln(n1);
+      val(n1, n, code);
+      if (n<1) or (n>501) then  flag:=false;
+      if (code<>0) or (flag=false) then writeln('Incorrect input!');
+    until (code=0) and (flag);
+
+    writeln('Recursion:');
+    Recursion(1,1,0,n,a);
+
+    writeln;
+    writeln('No Recursion:');
+
+    for i := 1 to n do
+     a[i]:=1;
+
+     flag:=true;  col:=n;
+     while flag do
+      begin
+      sum:=0;
+       for i := 1 to col do
+        sum:=sum+a[i];
+
+      if sum=n then
+       begin
+        for i := 1 to col do
+        if i=col then writeln(a[i])
+        else write(a[i],'+');
+        a[col]:=a[col]+1;
+        sum:=0;
+       end;
+
+       if sum<n then
+       begin
+         inc(a[col]); sum:=0;
+       end;
+
+        if sum>n then
+        begin
+          col:=col-1;
+          a[col]:=a[col]+1;
+          sum:=0;
+        end;
+
+        if a[1]=n then flag:=false;
+      end;
+
+      if n mod 2=0 then
+      writeln(n div 2,'+',n div 2)
+      else
+      writeln(n div 2,'+', (n div 2)+1);
+
+
+
+    readln;
+end.

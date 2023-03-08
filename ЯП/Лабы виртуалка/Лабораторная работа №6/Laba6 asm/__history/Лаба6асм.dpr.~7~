@@ -1,0 +1,131 @@
+program Ћаба6асм;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils;
+
+{------------------------------------------------------------------------------}
+procedure z61;
+
+  var
+  a, b, c, d, y2: integer;
+  y1: extended;
+  begin
+    writeln('„ерез делфи');
+    write('a = '); readln(a);
+    write('b = '); readln(b);
+    write('c = '); readln(c);
+    write('d = '); readln(d);
+    y1 := (a*b*c + 5)/(d-1);
+    writeln('y1 = ',y1:2:0);
+    writeln;
+
+    writeln('„ерез ассемблерную вставку');
+    asm
+      mov eax, a
+      imul  b
+      imul c
+      add eax, 5
+      mov ebx, d
+      sub ebx, 1
+      idiv ebx
+      mov y2, eax
+    end;
+    writeln('y2 = ',y2);
+  end;
+{------------------------------------------------------------------------------}
+procedure z62;
+  var
+    mas: array[1..5] of integer;
+    i, p1, p2: integer;
+  label dog;
+  begin
+    writeln('¬ведите массив: ');
+    for i := 1 to 5 do
+      begin
+        write('mas[',i,'] = '); readln(mas[i])
+      end;
+
+    p1 := 1;
+    writeln('„ерез делфи');
+    for i := 1 to 5 do
+      begin
+        if mas[i] > 0 then
+          p1 := p1 * mas[i]
+      end;
+    writeln('p1 = ',p1); writeln;
+
+    writeln('„ерез ассемблерную вставку');
+    asm
+     //xor ebx,ebx
+     lea esi,[mas]
+     mov ebx, 1
+     mov ecx,5
+     dog:
+        mov eax, [esi]  //eax = a[i]
+        cdq         //edx = знак eax
+        and eax, edx    // если eax > 0, edx = 0, eax = 0; если eax < 0, edx = ffff, eax = eax
+        imul ebx
+        mov ebx, eax
+        add esi, 4
+        dec ecx
+     jnz dog
+     mov [p2], ebx
+    end;
+    writeln('p2 = ',p2); writeln;
+
+  end;
+{------------------------------------------------------------------------------}
+procedure z63;
+  var
+    mas: array of integer;
+    n, x, s, i: integer;
+    label
+      next, metka;
+  begin
+    write('¬ведите размер массива: ');readln(n);
+    setlength(mas,n);
+    write('¬ведите х: ');readln(x);
+
+    writeln; writeln('¬ведите массив: ');
+    for i := 0 to n-1 do
+      begin
+        write('mas[',i+1,'] = '); readln(mas[i])
+      end;
+
+    writeln; writeln('„ерез делфи');  writeln;
+    S := 0;
+    for i := 0 to n-1 do
+      if abs(mas[i]) > x then
+        S := S + mas[i];
+    writeln(' S = ',s);
+
+    S := 0;
+    writeln; writeln('„ерез ассемблерную вставку');writeln;
+    asm
+        mov esi, [mas]
+        mov eax, S
+        mov ebx, 0
+        mov ecx, n
+        mov edx, x
+          metka:
+            cmp [esi+ebx], edx
+          jb next
+        add eax, [esi+ebx]
+          next:
+            add ebx,4
+          loopnz metka
+
+        mov [S], eax
+    end;
+    writeln(' S = ',s)
+
+  end;
+{------------------------------------------------------------------------------}
+begin
+  z61;
+  z63;
+
+readln
+end.

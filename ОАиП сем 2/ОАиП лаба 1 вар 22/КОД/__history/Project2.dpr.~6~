@@ -1,0 +1,90 @@
+program Projectlb7;
+
+{$APPTYPE CONSOLE}
+
+uses
+  System.SysUtils;
+
+var
+  set1: set of 0 .. 9;
+  l, o, b, t, r, i, s, a, m, am, sum, sum1, res: integer;
+  counter :real;
+  arr: array [1 .. 544] of string;
+  num1, num2, numf1, numf2: string;
+  flag: boolean;
+
+begin
+  set1 := [];
+  writeln('Лоб + Три = Сам');
+  counter := 0;
+  am := 1;
+  flag := false;
+
+  for l := 1 to 9 do
+  begin
+   set1 := set1 + [l];
+   for o := 0 to 9 do
+    if not(o in set1) then
+     begin
+       set1 := set1 + [o];
+       for b := 0 to 9 do
+        if not(b in set1) then
+         begin
+          set1 := set1 + [b];
+          for t := 1 to 9 do
+           if not(t in set1) then
+            begin
+             set1 := set1 + [t];
+             for r := 0 to 9 do
+              if not(r in set1) then
+               begin
+                set1 := set1 + [r];
+                for i := 0 to 9 do
+                 if not(i in set1) then
+                  begin
+                   set1 := set1 + [i];
+                   for s := 0 to 9 do
+                    if not(s in set1) then
+                     begin
+                      set1 := set1 + [s];
+                      for a := 0 to 9 do
+                       if not(a in set1) then
+                        begin
+                         set1 := set1 + [a];
+                         for m := 0 to 9 do
+                          if not(m in set1) then
+                           begin
+                            set1 := set1 + [m];
+                            sum1 := (l + t) * 100 + (o + r) * 10 + (b + i);
+                            res := s * 100 + a * 10 + m;
+                             if sum1 = res then
+                              begin
+                               writeln(l, o, b, '+', t, r, i,'=', s, a, m);
+                               counter := counter + 1;
+                              end;
+                            set1 := set1 - [m];
+                           end;
+                         set1 := set1 - [a];
+                        end;
+                      set1 := set1 - [s];
+                     end;
+                   set1 := set1 - [i];
+                  end;
+                set1 := set1 - [r];
+               end;
+             set1 := set1 - [t];
+            end;
+          set1 := set1 - [b];
+         end;
+      set1 := set1 - [o];
+     end;
+   set1 := set1 - [l];
+  end;
+
+counter:=round(counter/2);
+writeln('Комбинаций: ',counter:2:0);
+
+readln;
+end.
+
+

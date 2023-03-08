@@ -1,0 +1,122 @@
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils, Math;
+  Var n, i, s, a, kol : integer;
+  n1 : string;
+
+begin
+writeln('Введите N:');
+readln(n1);
+ if (n1<='0') or (n1>'30000') then     //  проверка дурака если вводишь буквы
+ begin
+  writeln('Error');
+  readln;
+  Halt(0);
+ end;
+n:=strtoint(n1);
+ if (n>30000) or (n<=0) then       //проверка дурака если вводишь число 0<=n>30000
+ begin
+  writeln('Error');
+  readln;
+  Halt(0);
+ end;
+kol:=0;
+ for i := 1 to n do
+   begin
+   a:=i;
+   s:=0;
+    while (a<>1) and (a<>4) do          // пока число не станет равно 1 или 4 ищем сумму квадратов
+     begin
+      while a<>0 do             // ищем сумму квадратов цифр числа
+       begin
+        s:=s+sqr(a mod 10);
+        a:=a div 10;
+       end;
+       a:=s;
+       s:=0;
+     end;
+    if a=1 then// если число получилось после преобразований равное 1, то выводим его и  сумма таких чисел +1
+     begin
+      kol:=kol+1;
+      writeln(i);       //вывод числа
+     end;
+   end;
+writeln('Количество таких чисел: ', kol);    // вывод количества
+readln;
+end.
+
+
+
+Нормальная проверка на дурака:
+
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils, Math;
+  Var cod, n, i, s, a, kol, rab2 : integer;
+  n1 : string;
+  rab1 : real;
+
+
+begin
+rab2:=1;
+cod:=1;
+ while rab2<>0 do
+ begin
+  repeat
+   writeln('Введите N:');     // проверка длинны строки
+   readln(n1);
+   if length(n1)>5 then writeln('Error, please try again');
+  until length(n1)<=5 ;
+  while cod<>0 do           //  проверка дурака если вводишь символы
+   begin
+    val(n1,rab1,cod);
+    if cod<>0 then
+    begin
+     writeln('Error, please try again');
+        repeat
+         writeln('Введите N:');          // проверка длинны строки  снова
+         readln(n1);
+         if length(n1)>5 then writeln('Error, please try again');
+        until length(n1)<=5 ;
+    end
+    else cod:=0;
+   end;
+  n:=strtoint(n1);
+  if (n<=0) or (n>30000) then       //проверка дурака если вводишь число 0<=n>30000
+   writeln('Error, please try again')
+  else rab2:=0;
+ end;
+kol:=0;
+ for i := 1 to n do         //пробегаемся по промежутку [1..n]
+   begin
+   a:=i;
+   s:=0;
+    while (a<>1) and (a<>4) do          // пока число не станет равно 1 или 4 ищем сумму квадратов
+     begin
+      while a<>0 do             // ищем сумму квадратов цифр числа
+       begin
+        s:=s+sqr(a mod 10);
+        a:=a div 10;
+       end;
+       a:=s;
+       s:=0;
+     end;
+    if a=1 then// если число получилось после преобразований равное 1, то выводим его и  сумма таких чисел +1
+     begin
+      kol:=kol+1;
+      writeln(i);       //вывод числа
+     end;
+   end;
+writeln('Количество таких чисел: ', kol);    // вывод количества
+readln;
+end.

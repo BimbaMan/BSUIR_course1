@@ -1,0 +1,69 @@
+unit Unit8test;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TfrmOpen = class(TForm)
+    rbOpenMale: TRadioButton;
+    rbOpenFemale: TRadioButton;
+    edtOpen: TEdit;
+    btnOpenType: TButton;
+    btnOpenText: TButton;
+    lblOpenTitle: TLabel;
+    lblOpenNumber: TLabel;
+    procedure btnOpenTypeClick(Sender: TObject);
+    procedure btnOpenTextClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmOpen: TfrmOpen;
+
+implementation
+uses unit1test;
+{$R *.dfm}
+
+procedure TfrmOpen.btnOpenTextClick(Sender: TObject);
+begin
+  if (rbOpenFemale.Checked=false) and (rbOpenMale.Checked=false) then
+    ShowMessage('Ошибка! Выберите пол пользователя.');
+
+  if rbOpenFemale.Checked=true then begin
+    file_open_text(PMaleHead, edtOpen.Text);
+    listbox_print_male(PMaleHead);
+  end;
+
+  if rbOpenMale.Checked=true then begin
+    file_open_text(PMaleHead, edtOpen.Text);
+    listbox_print_male(PMaleHead);
+  end;
+
+  edtOpen.Text:='';
+end;
+
+procedure TfrmOpen.btnOpenTypeClick(Sender: TObject);
+begin
+  if (rbOpenFemale.Checked=false) and (rbOpenMale.Checked=false) then
+    ShowMessage('Обишка! Выберите пол.');
+
+  if rbOpenFemale.Checked=true then begin
+    file_open_typized(PFemHead, edtOpen.Text);
+    listbox_print_female(PFemHead);
+  end;
+
+  if rbOpenMale.Checked=true then begin
+    file_open_typized(PMaleHead, edtOpen.Text);
+    listbox_print_male(PMaleHead);
+  end;
+
+  edtOpen.Text:='';
+end;
+
+end.

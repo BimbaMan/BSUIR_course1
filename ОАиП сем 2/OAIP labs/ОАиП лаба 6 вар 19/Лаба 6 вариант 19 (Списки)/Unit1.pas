@@ -1,0 +1,393 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Button1: TButton;
+    Button2: TButton;
+    ListOfZakazi: TMemo;
+    ListOfKyrieri: TMemo;
+    Label3: TLabel;
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    N6: TMenuItem;
+    SaveDialog1: TSaveDialog;
+    OpenDialog1: TOpenDialog;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    Button8: TButton;
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure N2Click(Sender: TObject);
+    procedure N5Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure N4Click(Sender: TObject);
+    procedure N6Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+
+type
+    TZakazZapis = record
+        Number:integer;
+        Adres:String[40];
+        TimeMin:Integer;
+        TimeMax:Integer;
+        Ves:Integer;
+        Obiem:Integer;
+    end;
+
+    Adr=^TMainZakazZapis;
+    TMainZakazZapis = record
+        Data:TZakazZapis;
+        Adrcled:Adr;
+    end;
+
+    TKyrierZapis = record
+        Number:Integer;
+        Name:String[20];
+        Surname:String[20];
+        SecondName:String[20];
+        WorkTimeMin:Integer;
+        WorkTimeMax:Integer;
+        Gruzopodiem:Integer;
+        MaxObiem:Integer;
+    end;
+
+    Addr=^TMainKyrierZapis;
+    TMainKyrierZapis = record
+        Data:TKyrierZapis;
+        Addrcled:Addr;
+    end;
+
+    AdrCopy=^TMainZakazZapisCopy;
+    TMainZakazZapisCopy = record
+        Data:TZakazZapis;
+        AdrcledCopy:AdrCopy;
+    end;
+
+    AddrCopy=^TMainKyrierZapisCopy;
+    TMainKyrierZapisCopy = record
+        Data:TKyrierZapis;
+        NumOfZakazi:Integer;
+        AddrcledCopy:AddrCopy;
+    end;
+
+var
+  Form1: TForm1;
+  Adr1,AdrCurr: Adr;
+  Addr1,AddrCurr: Addr;
+  Adr1Copy,AdrCurrCopy: AdrCopy;
+  Addr1Copy,AddrCurrCopy: AddrCopy;
+  FileZakazi: File of TZakazZapis;
+  FileKyrieri: File of TKyrierZapis;
+  MasZakazi: Array of Array[0..20] of integer;
+  MasOfTimeMinZakazi,MasOfTimeMaxZakazi,MasOfVesZakazi,MasOfObiemZakazi,MasOfTimeMinKyrieri,MasOfTimeMaxKyrieri,MasOfVesKyrieri,MasOfObiemKyrieri: Array of integer;
+
+
+implementation
+
+{$R *.dfm}
+
+uses Unit2, Unit3, Unit4, Unit5, Unit6, Unit7, Unit8, Unit9, Unit10, Unit11;
+
+//добавить заказ
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+    Form2.Show;
+end;
+
+//добавить курьера
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+    Form3.Show;
+end;
+
+//удалить заказ
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+    Form4.Show;
+end;
+
+//удалить курьера
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+    Form5.Show;
+end;
+
+//сортировать (Может удалить? В ТЗ этого нет)
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+    Form6.Show;
+end;
+
+//поиск
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+    Form7.Show;
+end;
+
+//редактировать
+procedure TForm1.Button7Click(Sender: TObject);
+begin
+    Form8.Show;
+end;
+
+//распределить заказы
+procedure TForm1.Button8Click(Sender: TObject);
+var
+    i,j:integer;
+    AddrCurrCopyPrev: AddrCopy;
+    MinV,MinO,MaxVGruz,MaxOGruz:integer;
+    previous,Udal:AdrCopy;
+label
+  SkipInc,KyrierFound;
+begin
+    AdrCurrCopy:=Adr1Copy;                                       // Создаём копию заказов
+    AdrCurr:=Adr1;
+    while AdrCurr^.Adrcled <> nil do
+    begin
+
+        AdrCurr:=AdrCurr^.Adrcled;
+        New(AdrCurrCopy^.AdrcledCopy);
+        AdrCurrCopy:= AdrCurrCopy^.AdrcledCopy;
+
+        AdrCurrCopy^.Data.Number:= AdrCurr^.Data.Number;
+        AdrCurrCopy^.Data.Adres:= AdrCurr^.Data.Adres;
+        AdrCurrCopy^.Data.TimeMin:= AdrCurr^.Data.TimeMin;
+        AdrCurrCopy^.Data.TimeMax:= AdrCurr^.Data.TimeMax;
+        AdrCurrCopy^.Data.Ves:= AdrCurr^.Data.Ves;
+        AdrCurrCopy^.Data.Obiem:= AdrCurr^.Data.Obiem;
+        AdrCurrCopy^.AdrcledCopy:= nil;
+    end;
+
+    AddrCurrCopy:=Addr1Copy;                                       // Создаём копию курьеров
+    AddrCurr:=Addr1;
+    while AddrCurr^.Addrcled <> nil do
+    begin
+        AddrCurr:=AddrCurr^.Addrcled;
+        New(AddrCurrCopy^.AddrcledCopy);
+        AddrCurrCopy:= AddrCurrCopy^.AddrcledCopy;
+
+        AddrCurrCopy^.Data.Number:= AddrCurr^.Data.Number;
+        AddrCurrCopy^.Data.Name:= AddrCurr^.Data.Name;
+        AddrCurrCopy^.Data.Surname:= AddrCurr^.Data.Surname;
+        AddrCurrCopy^.Data.SecondName:= AddrCurr^.Data.SecondName;
+        AddrCurrCopy^.Data.WorkTimeMin:= AddrCurr^.Data.WorkTimeMin;
+        AddrCurrCopy^.Data.WorkTimeMax:= AddrCurr^.Data.WorkTimeMax;
+        AddrCurrCopy^.Data.Gruzopodiem:= AddrCurr^.Data.Gruzopodiem;
+        AddrCurrCopy^.Data.MaxObiem:= AddrCurr^.Data.MaxObiem;
+        AddrCurrCopy^.NumOfZakazi:=0;
+        AddrCurrCopy^.AddrcledCopy:= nil;
+    end;
+
+    AddrCurrCopy:=Addr1Copy;
+    while AddrCurrCopy^.AddrcledCopy <> nil do
+    begin
+        MaxVGruz:=0;
+        MaxOGruz:=0;
+
+        AddrCurrCopy:=AddrCurrCopy^.AddrcledCopy;
+        MinV:=AddrCurrCopy.Data.Gruzopodiem;
+        MinO:=AddrCurrCopy.Data.MaxObiem;
+
+        AdrCurrCopy:=Adr1Copy;
+        while AdrCurrCopy^.AdrcledCopy <> nil do
+        begin
+            AdrCurrCopy:=AdrCurrCopy^.AdrcledCopy;
+            if (AdrCurrCopy.Data.Ves < MinV) and (AdrCurrCopy.Data.Obiem < MinO) and (AdrCurrCopy.Data.Ves>MaxVGruz) and (AdrCurrCopy.Data.Obiem > MaxOGruz) and (AddrCurrCopy.Data.WorkTimeMin <= AdrCurrCopy.Data.TimeMin) and (AddrCurrCopy.Data.WorkTimeMax >= AdrCurrCopy.Data.TimeMax) then
+            begin
+                MaxVGruz:= AdrCurrCopy.Data.Ves;
+                MaxOGruz:= AdrCurrCopy.Data.Obiem;
+            end;
+        end;
+
+        AdrCurrCopy:=Adr1Copy;
+        while AdrCurrCopy^.AdrcledCopy <> nil do
+        begin
+            AdrCurrCopy:=AdrCurrCopy^.AdrcledCopy;
+            if (AdrCurrCopy.Data.Ves = MaxVGruz) and (AdrCurrCopy.Data.Obiem = MaxOGruz) then
+                AddrCurrCopy.NumOfZakazi:=AdrCurrCopy.Data.Number;
+        end;
+        if AddrCurrCopy.NumOfZakazi <> 0 then
+        begin
+            AdrCurrCopy:=Adr1Copy;
+            while AdrCurrCopy^.Data.Number <> AddrCurrCopy^.NumOfZakazi do                   /////////// ХЗЗЗЗЗЗЗЗ
+            begin
+                previous:=AdrCurrCopy;
+                AdrCurrCopy:=AdrCurrCopy^.AdrcledCopy;
+            end;
+
+
+           Udal:=previous^.AdrcledCopy;
+           previous^.AdrcledCopy:=previous^.AdrcledCopy^.AdrcledCopy;
+           Dispose(Udal);
+        end;
+    end;
+
+    ShowMessage('Заказы распределены успешно!');
+    Form11.Show;
+
+
+
+
+end;
+
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+    New(Adr1);
+    AdrCurr:=Adr1;
+    AdrCurr^.Adrcled:= nil;
+
+    New(Addr1);
+    AddrCurr:=Addr1;
+    AddrCurr^.Addrcled:= nil;
+
+    New(Adr1Copy);
+    AdrCurrCopy:=Adr1Copy;
+    AdrCurrCopy^.AdrcledCopy:=nil;
+
+    New(Addr1Copy);
+    AddrCurrCopy:=Addr1Copy;
+    AddrCurrCopy^.AddrcledCopy:=nil;
+
+end;
+
+//сохранить заказы
+procedure TForm1.N2Click(Sender: TObject);
+begin
+    if SaveDialog1.Execute then
+    begin
+        AssignFile(FileZakazi,SaveDialog1.FileName);
+        Rewrite(FileZakazi);
+        AdrCurr:=Adr1;
+        while AdrCurr^.Adrcled <> nil do
+        begin
+            AdrCurr:=AdrCurr^.Adrcled;
+            AdrCurr.Data.Number:=AdrCurr^.Data.Number;
+            AdrCurr.Data.Adres:=AdrCurr^.Data.Adres;
+            AdrCurr.Data.TimeMin:=AdrCurr^.Data.TimeMin;
+            AdrCurr.Data.TimeMax:=AdrCurr^.Data.TimeMax;
+            AdrCurr.Data.Ves:=AdrCurr^.Data.Ves;
+            AdrCurr.Data.Obiem:=AdrCurr^.Data.Obiem;
+            Write(FileZakazi,AdrCurr.Data);
+        end;
+        CloseFile(FileZakazi);
+        ShowMessage('Файл сохранён успешно!');
+    end;
+
+end;
+
+//сохранить курьеров
+procedure TForm1.N4Click(Sender: TObject);
+begin
+    if SaveDialog1.Execute then
+    begin
+        AssignFile(FileKyrieri,SaveDialog1.FileName);
+        Rewrite(FileKyrieri);
+        AddrCurr:=Addr1;
+        while AddrCurr^.Addrcled <> nil do
+        begin
+            AddrCurr:=AddrCurr^.Addrcled;
+            AddrCurr.Data.Number:=AddrCurr^.Data.Number;
+            AddrCurr.Data.Name:=AddrCurr^.Data.Name;
+            AddrCurr.Data.Surname:=AddrCurr^.Data.Surname;
+            AddrCurr.Data.SecondName:=AddrCurr^.Data.SecondName;
+            AddrCurr.Data.WorkTimeMin:=AddrCurr^.Data.WorkTimeMin;
+            AddrCurr.Data.WorkTimeMax:=AddrCurr^.Data.WorkTimeMax;
+            AddrCurr.Data.Gruzopodiem:=AddrCurr^.Data.Gruzopodiem;
+            AddrCurr.Data.MaxObiem:=AddrCurr^.Data.MaxObiem;
+            Write(FileKyrieri,AddrCurr.Data);
+        end;
+        CloseFile(FileKyrieri);
+        ShowMessage('Файл сохранён успешно!');
+    end;
+end;
+
+//открыть заказы
+procedure TForm1.N5Click(Sender: TObject);
+begin
+    if OpenDialog1.Execute then
+    begin
+        ListOfZakazi.Lines.Clear;
+        AssignFile(FileZakazi,OpenDialog1.FileName);
+        Reset(FileZakazi);
+        Seek(FileZakazi,0);
+        AdrCurr:=Adr1;
+        while not Eof(FileZakazi) do
+        begin
+            New(AdrCurr^.Adrcled);
+            AdrCurr:=AdrCurr^.Adrcled;
+            Read(FileZakazi,AdrCurr.Data);
+            AdrCurr^.Data.Number:= AdrCurr.Data.Number;
+            AdrCurr^.Data.Adres:=AdrCurr.Data.Adres;
+            AdrCurr^.Data.TimeMin:=AdrCurr.Data.TimeMin;
+            AdrCurr^.Data.TimeMax:=AdrCurr.Data.TimeMax;
+            AdrCurr^.Data.Ves:=AdrCurr.Data.Ves;
+            AdrCurr^.Data.Obiem:=AdrCurr.Data.Obiem;
+            AdrCurr^.Adrcled:= nil;
+            ListOfZakazi.Lines.Add('Заказ нормер: '+IntToStr(AdrCurr.Data.Number)+#13#10+'Адрес доставки: '+AdrCurr.Data.Adres+#13#10+'Время доставки: с '+IntToStr(AdrCurr.Data.TimeMin)+' до '+IntToStr(AdrCurr.Data.TimeMax)+' часов'+#13#10+'Вес: '+IntToStr(AdrCurr.Data.Ves)+' кг'+#13#10+'Объём: '+IntToStr(AdrCurr.Data.Obiem)+' м^3'+#13#10);
+
+        end;
+        CloseFile(FileZakazi);
+        ShowMessage('Вставка прошла успешно!');
+    end;
+
+end;
+
+//открыть курьеров
+procedure TForm1.N6Click(Sender: TObject);
+begin
+    if OpenDialog1.Execute then
+    begin
+        ListOfKyrieri.Lines.Clear;
+        AssignFile(FileKyrieri,OpenDialog1.FileName);
+        Reset(FileKyrieri);
+        Seek(FileKyrieri,0);
+        AddrCurr:=Addr1;
+        while not Eof(FileKyrieri) do
+        begin
+            New(AddrCurr^.Addrcled);
+            AddrCurr:=AddrCurr^.Addrcled;
+            Read(FileKyrieri,AddrCurr.Data);
+            AddrCurr^.Data.Number:=AddrCurr.Data.Number;
+            AddrCurr^.Data.Name:=AddrCurr.Data.Name;
+            AddrCurr^.Data.Surname:=AddrCurr.Data.Surname;
+            AddrCurr^.Data.SecondName:=AddrCurr.Data.SecondName;
+            AddrCurr^.Data.WorkTimeMin:=AddrCurr.Data.WorkTimeMin;
+            AddrCurr^.Data.WorkTimeMax:=AddrCurr.Data.WorkTimeMax;
+            AddrCurr^.Data.Gruzopodiem:=AddrCurr.Data.Gruzopodiem;
+            AddrCurr^.Data.MaxObiem:=AddrCurr.Data.MaxObiem;
+            AddrCurr^.Addrcled:= nil;
+            ListOfKyrieri.Lines.Add('Номер курьера: '+IntToStr(AddrCurr.Data.Number)+#13#10+'ФИО: '+AddrCurr.Data.Surname+' '+AddrCurr.Data.Name+' '+AddrCurr.Data.SecondName+#13#10+'Время работы: с '+IntToStr(AddrCurr.Data.WorkTimeMin)+' до '+IntToStr(AddrCurr.Data.WorkTimeMax)+' часов'+#13#10+'Грузоподъёмность автомобиля: '+IntToStr(AddrCurr.Data.Gruzopodiem)+' кг'+#13#10+'Максимальный объём груза: '+IntToStr(AddrCurr.Data.MaxObiem)+' м^3'+#13#10);
+        end;
+        CloseFile(FileKyrieri);
+        ShowMessage('Вставка прошла успешно!');
+    end;
+end;
+
+end.

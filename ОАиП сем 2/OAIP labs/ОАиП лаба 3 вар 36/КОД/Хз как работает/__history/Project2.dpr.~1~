@@ -1,0 +1,73 @@
+program Project3;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils;
+
+const
+  PTR = 10;
+
+type
+  razbivka = array[0..PTR] of byte;
+
+var
+  n, i, z, k: byte;
+  x: razbivka;
+
+procedure p(var x: razbivka; var z: byte);
+var
+  i, j, s: byte;
+begin
+  i := z - 1;
+  s := x[z];
+  while (i > 1) and (x[i - 1] <= x[i] ) do
+  begin
+    s := s + x[i];
+    dec(i);
+  end;
+  inc( x[i] );
+  z := i + s - 1;
+  for j := i + 1 to z do
+    x[j] := 1;
+end;
+
+begin
+
+
+
+
+
+
+
+
+
+
+
+  write('¬ведите число: ');
+  readln(n);
+  write(n, '=');
+  z := n;
+  for i := 1 to z do
+    x[i] := 1;
+  for i := 1 to n do
+  begin
+    if i > 1 then write('+');
+    write( x[i],'');
+  end;
+  writeln;
+  repeat
+    p( x, z );
+    inc(k);
+    for i := 1 to z do
+    begin
+      if i > 1 then write('+');
+      write( x[i],'');
+    end;
+    writeln;
+  until z = 1;
+
+ readln;
+end.

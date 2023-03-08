@@ -1,0 +1,68 @@
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+uses
+  System.SysUtils;
+
+var
+stroka:string;
+dlinastroki:integer;
+
+posledneeslovo,slovopredlogenya:string;
+
+konec,nachalo:integer;
+
+slovopredlogenia:string;
+
+z,i,room:byte;
+begin
+ writeln('vvedi stroky');
+ readln(stroka);
+
+dlinastroki:=length(stroka);
+writeln('dlina stroki= ',dlinastroki);
+
+
+for i:=dlinastroki downto 1 do
+ begin
+  if ord(stroka[i])= 32 then
+   begin
+    room:=i;
+    break;
+   end;
+ end;
+writeln('nomer poslednego probela= ',room);
+
+
+posledneeslovo:=copy(stroka,room+1,dlinastroki);
+writeln('poslednee slovo= ',posledneeslovo);
+
+
+
+nachalo:=1;
+konec:=1;
+for i:=0 to dlinastroki do
+ begin
+  if ord(stroka[i])=23 then
+   begin
+    konec:=i;
+    slovopredlogenya:=copy(stroka,nachalo,konec);
+     if  slovopredlogenya = posledneeslovo then
+      begin
+       delete(stroka,nachalo,konec-nachalo+1);
+      end;
+     nachalo:=konec;
+   end;
+
+ end;
+
+
+delete(stroka,room,dlinastroki);
+
+writeln('stroka bez poslednego slova= ',stroka);
+
+
+
+readln;
+end.

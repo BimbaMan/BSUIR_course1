@@ -1,0 +1,107 @@
+unit Unit2test;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TfrmAdd = class(TForm)
+    lblAddTitle: TLabel;
+    edtAddName: TEdit;
+    edtAddAge: TEdit;
+    edtAddHeight: TEdit;
+    edtAddWeight: TEdit;
+    btnAddAdd: TButton;
+    rbAddMale: TRadioButton;
+    rbAddFemale: TRadioButton;
+    edtAddAgeMin: TEdit;
+    edtAddAgeMax: TEdit;
+    edtAddHeightMin: TEdit;
+    edtAddHeightMax: TEdit;
+    edtAddWeightMin: TEdit;
+    edtAddWeightMax: TEdit;
+    lblAddName: TLabel;
+    lblAddAge: TLabel;
+    lblAddHeight: TLabel;
+    lblAddWeight: TLabel;
+    lblAddAgeMinAgeMax: TLabel;
+    lblAddHeightMinHeightMax: TLabel;
+    lblAddWeightMinWeightMax: TLabel;
+    lblAddWants: TLabel;
+    procedure btnAddAddClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAdd: TfrmAdd;
+implementation
+
+uses Unit1test;
+
+{$R *.dfm}
+
+procedure TfrmAdd.btnAddAddClick(Sender: TObject);
+begin
+    if (rbAddMale.Checked=False) and (rbAddFemale.Checked=False) then
+    ShowMessage('Ошибка! Выберите пол пользователя.');
+
+  if (edtAddAgeMin.Text<>'') and (edtAddAgeMax.Text<>'') and (edtAddHeightMin.Text<>'') and (edtAddHeightMax.Text<>'') and (edtAddWeightMin.Text<>'') and (edtAddWeightMax.Text<>'')  then begin
+
+
+
+    if (strtoint(edtAddAgeMin.Text)<=strtoint(edtAddAgeMax.Text)) and (strtoint(edtAddHeightMin.Text)<=strtoint(edtAddHeightMax.Text)) and (strtoint(edtAddWeightMin.Text)<=strtoint(edtAddWeightMax.Text)) then begin
+
+     if rbAddFemale.Checked=True then begin
+       list_elem_create(edtAddName.Text, edtAddAge.Text, edtAddHeight.Text, edtAddWeight.Text, edtAddAgeMin.Text, edtAddAgeMax.Text,
+       edtAddHeightMin.Text, edtAddHeightMax.Text, edtAddWeightMin.Text, edtAddWeightMax.Text, PFemHead);
+       frmMain.FemaleList.Clear;
+       listbox_print_female(PFemHead);
+     end;
+
+     if rbAddMale.Checked=True then begin
+       list_elem_create(edtAddName.Text, edtAddAge.Text, edtAddHeight.Text, edtAddWeight.Text, edtAddAgeMin.Text, edtAddAgeMax.Text,
+       edtAddHeightMin.Text, edtAddHeightMax.Text, edtAddWeightMin.Text, edtAddWeightMax.Text, PMaleHead);
+       frmMain.MaleList.Clear;
+       listbox_print_male(PMaleHead);
+     end;
+    end
+    else
+    ShowMessage('Ошибка! Не верно введены требования к партнеру.');
+
+  end
+
+  else begin
+     if rbAddFemale.Checked=True then begin
+       list_elem_create(edtAddName.Text, edtAddAge.Text, edtAddHeight.Text, edtAddWeight.Text, edtAddAgeMin.Text, edtAddAgeMax.Text,
+       edtAddHeightMin.Text, edtAddHeightMax.Text, edtAddWeightMin.Text, edtAddWeightMax.Text, PFemHead);
+       frmMain.FemaleList.Clear;
+       listbox_print_female(PFemHead);
+     end;
+
+     if rbAddMale.Checked=True then begin
+       list_elem_create(edtAddName.Text, edtAddAge.Text, edtAddHeight.Text, edtAddWeight.Text, edtAddAgeMin.Text, edtAddAgeMax.Text,
+       edtAddHeightMin.Text, edtAddHeightMax.Text, edtAddWeightMin.Text, edtAddWeightMax.Text, PMaleHead);
+       frmMain.MaleList.Clear;
+       listbox_print_male(PMaleHead);
+     end;
+  end;
+
+  edtAddName.Text:='';
+  edtAddAge.Text:='';
+  edtAddHeight.Text:='';
+  edtAddWeight.Text:='';
+  edtAddAgeMin.Text:='';
+  edtAddAgeMax.Text:='';
+  edtAddHeightMin.Text:='';
+  edtAddHeightMax.Text:='';
+  edtAddWeightMin.Text:='';
+  edtAddWeightMax.Text:='';
+
+end;
+
+end.

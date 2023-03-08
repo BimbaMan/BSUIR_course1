@@ -1,0 +1,72 @@
+unit Unit4;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm4 = class(TForm)
+    Label1: TLabel;
+    Edit1: TEdit;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form4: TForm4;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit1;
+
+procedure TForm4.Button1Click(Sender: TObject);
+var
+    A,previous:Adr;
+    Num: Integer;
+    Check:Boolean;
+begin
+    Check:=False;
+    Num:=StrToInt(Edit1.Text);
+
+    AdrCurr:=Adr1;
+    while AdrCurr^.Adrcled <> nil do
+    begin
+        AdrCurr:=AdrCurr^.Adrcled;
+        if AdrCurr.Data.Number = Num then
+            Check:=True;
+    end;
+    if Check = True then
+    begin
+        AdrCurr:=Adr1;
+        while AdrCurr^.Data.Number <> Num do
+        begin
+            previous:=AdrCurr;
+            AdrCurr:=AdrCurr^.Adrcled;
+        end;
+        A:=previous^.Adrcled;
+        previous^.Adrcled:=previous^.Adrcled^.Adrcled;
+        Dispose(A);
+        Edit1.Text:='';
+        ShowMessage('Заказ успешно удалён.');
+        Form4.Close;
+        Form1.ListOfZakazi.Clear;
+        AdrCurr:=Adr1;
+        while AdrCurr^.Adrcled <> nil do
+        begin
+            AdrCurr:=AdrCurr^.Adrcled;
+            Form1.ListOfZakazi.Lines.Add('Заказ нормер: '+IntToStr(AdrCurr.Data.Number)+#13#10+'Адрес доставки: '+AdrCurr.Data.Adres+#13#10+'Время доставки: с '+IntToStr(AdrCurr.Data.TimeMin)+' до '+IntToStr(AdrCurr.Data.TimeMax)+' часов'+#13#10+'Вес: '+IntToStr(AdrCurr.Data.Ves)+' кг'+#13#10+'Объём: '+IntToStr(AdrCurr.Data.Obiem)+' м^3'+#13#10);
+        end;
+    end
+    else
+    ShowMessage('Такого заказа не существует');
+end;
+
+end.
